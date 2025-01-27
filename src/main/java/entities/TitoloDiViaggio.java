@@ -6,7 +6,6 @@ import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "TitoliDiViaggio", discriminatorType = DiscriminatorType.STRING)
 
 public abstract class TitoloDiViaggio {
 
@@ -23,6 +22,7 @@ public abstract class TitoloDiViaggio {
     @ManyToOne
     @JoinColumn(name = "punto_emissione_id", nullable = false)
     private PuntoDiEmissione puntoDiEmissione;
+
 
 
     public TitoloDiViaggio(Double prezzo, LocalDate dataEmissione, PuntoDiEmissione puntoDiEmissione) {

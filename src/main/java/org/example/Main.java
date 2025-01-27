@@ -30,29 +30,33 @@ public class Main {
         //puntoEmissioneDao.savePuntoEmissione();
 
 
-        Tessera t = new Tessera("ex00021bv", LocalDate.now());
+        Tessera t = new Tessera(faker.number().digits(8), LocalDate.now());
         //tesseraDao.saveTessera(t);
 
-        Utente u = new Utente(faker.name().firstName(), faker.name().lastName(), tesseraDao.getTesseraById(2L), false);
+        Utente u = new Utente(faker.name().firstName(), faker.name().lastName(), tesseraDao.getTesseraById(4L), false);
         //utenteDao.saveUtente(u);
 
-        PuntoDiEmissione pe = new DistributoreAutomatico("trixieET102", true);
-        //puntoEmissioneDao.savePuntoEmissione(pe);
+        PuntoDiEmissione ped = new DistributoreAutomatico(faker.company().name(), true);
+        PuntoDiEmissione per = new RivenditoreAutorizzato(faker.company().name(), faker.address().fullAddress());
+        //puntoEmissioneDao.savePuntoEmissione(per);
+        //puntoEmissioneDao.savePuntoEmissione(ped);
 
-        TitoloDiViaggio tv = new Abbonamento(104.00, LocalDate.now(), puntoEmissioneDao.getPuntoEmissioneById(4L), tesseraDao.getTesseraById(2L), TipoAbbonamento.MENSILE);
-        //titolodiviaggioDao.saveTitoloDiViaggio(tv);
+        TitoloDiViaggio tvb = new Biglietto(19.90, LocalDate.of(2025, 1, 7), puntoEmissioneDao.getPuntoEmissioneById(1L), false, TipoBiglietto.ANDATA);
+        TitoloDiViaggio tva = new Abbonamento(21.90, LocalDate.of(2024,12,6), puntoEmissioneDao.getPuntoEmissioneById(2L), tesseraDao.getTesseraById(2L), TipoAbbonamento.MENSILE);
+       // titolodiviaggioDao.saveTitoloDiViaggio(tvb);
+        //titolodiviaggioDao.saveTitoloDiViaggio(tva);
 
 
         // ricerca all titoli di viaggio
         //System.out.println(titolodiviaggioDao.ricercaListaTitoliViaggioEmessi());
 
         //ricerca per punto di emissione
-        LocalDate dataInizio = LocalDate.of(2025, 1, 20);
+        LocalDate dataInizio = LocalDate.of(2025, 1, 1);
         LocalDate dataFine = LocalDate.now();
-        //System.out.println(titolodiviaggioDao.ricercaTitoliViaggioPerPuntoEmissione(puntoEmissioneDao.getPuntoEmissioneById(4L), dataInizio, dataFine));
+        //System.out.println(titolodiviaggioDao.ricercaTitoliViaggioPerPuntoEmissione(puntoEmissioneDao.getPuntoEmissioneById(2L), dataInizio, dataFine));
 
 
-        //System.out.println(titolodiviaggioDao.verificaValiditàAbbonamentoTramiteNumeroTessera(tesseraDao.getTesseraById(1L)));
+        System.out.println(titolodiviaggioDao.verificaValiditàAbbonamentoTramiteNumeroTessera(tesseraDao.getTesseraById(2L)));
 
 
         em.close();

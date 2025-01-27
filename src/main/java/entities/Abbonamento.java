@@ -16,6 +16,8 @@ public class Abbonamento extends TitoloDiViaggio {
     @Enumerated(EnumType.STRING)
     private TipoAbbonamento tipoAbbonamento;
 
+    private LocalDate dataFineValidità;
+
     public Abbonamento() {
     }
 
@@ -23,8 +25,20 @@ public class Abbonamento extends TitoloDiViaggio {
         super(prezzo, dataEmissione, puntoDiEmissione);
         this.tesseraUtente = tesseraUtente;
         this.tipoAbbonamento = tipoAbbonamento;
+        if (this.tipoAbbonamento == TipoAbbonamento.SETTIMANALE) {
+            this.dataFineValidità = dataEmissione.plusDays(7);
+        } else if (this.tipoAbbonamento == TipoAbbonamento.MENSILE) {
+            this.dataFineValidità = dataEmissione.plusDays(30);
+        }
     }
 
+    public LocalDate getDataFineValidità() {
+        return dataFineValidità;
+    }
+
+    public void setDataFineValidità(LocalDate dataFineValidità) {
+        this.dataFineValidità = dataFineValidità;
+    }
 
     public Tessera getTesseraUtente() {
         return tesseraUtente;

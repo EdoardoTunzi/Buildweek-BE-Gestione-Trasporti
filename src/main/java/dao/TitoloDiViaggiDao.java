@@ -7,6 +7,7 @@ import entities.TitoloDiViaggio;
 import entities.Utente;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -53,9 +54,17 @@ public class TitoloDiViaggiDao {
     }
 
     public TitoloDiViaggio verificaValiditàAbbonamentoTramiteNumeroTessera(Tessera tesseraUtente) {
-            return em.createQuery("SELECT tv FROM TitoloDiViaggio tv WHERE tv.tesseraUtente = :tesseraUtente", TitoloDiViaggio.class)
+        LocalDate oggi = LocalDate.now();
+        try {
+            return em.createQuery("SELECT tv FROM TitoloDiViaggio tv WHERE tv.tesseraUtente = :tesseraUtente " +
+                                    "AND tv.dataFineValidità >= :oggi"
+                            , TitoloDiViaggio.class)
                     .setParameter("tesseraUtente", tesseraUtente)
+                    .setParameter("oggi", oggi)
                     .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("nessun abbonamento valido associato alla tessera " + tesseraUtente);
+        }
+        return null;
     }
-
 }
