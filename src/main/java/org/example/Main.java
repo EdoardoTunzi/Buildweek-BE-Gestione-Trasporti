@@ -27,6 +27,7 @@ public class Main {
         TesseraDao tesseraDao = new TesseraDao(em);
         TitoloDiViaggiDao titolodiviaggioDao = new TitoloDiViaggiDao(em);
         PuntoEmissioneDao puntoEmissioneDao = new PuntoEmissioneDao(em);
+        //puntoEmissioneDao.savePuntoEmissione();
 
 
         Tessera t = new Tessera("ex00021bv", LocalDate.now());
