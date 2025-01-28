@@ -12,41 +12,54 @@ import java.time.LocalDate;
 @Table(name = "biglietti")
 public class Biglietto extends TitoloDiViaggio {
 
-    private Boolean isTimbrato;
+    private Boolean isVidimato;
+
+    private Boolean isValid;
 
     @Enumerated(EnumType.STRING)
-    private TipoBiglietto tratta;
+    private TipoBiglietto trattaBiglietto;
+
 
     public Biglietto() {
     }
 
-    public Biglietto(Double prezzo, LocalDate dataEmissione, PuntoDiEmissione puntoDiEmissione, Boolean isTimbrato, TipoBiglietto tratta) {
+    public Biglietto(Double prezzo, LocalDate dataEmissione, PuntoDiEmissione puntoDiEmissione, TipoBiglietto tratta) {
         super(prezzo, dataEmissione, puntoDiEmissione);
-        this.isTimbrato = isTimbrato;
-        this.tratta = tratta;
+        this.isVidimato = false;
+        this.isValid = true;
+        this.trattaBiglietto = tratta;
     }
 
-    public Boolean getTimbrato() {
-        return isTimbrato;
+    public Boolean getVidimato() {
+        return isVidimato;
     }
 
-    public void setTimbrato(Boolean timbrato) {
-        isTimbrato = timbrato;
+    public void setVidimato(Boolean vidimato) {
+        isVidimato = vidimato;
     }
 
-    public TipoBiglietto getTratta() {
-        return tratta;
+    public Boolean getValid() {
+        return isValid;
     }
 
-    public void setTratta(TipoBiglietto tratta) {
-        this.tratta = tratta;
+    public void setValid(Boolean valid) {
+        isValid = valid;
+    }
+
+    public TipoBiglietto getTrattaBiglietto() {
+        return trattaBiglietto;
+    }
+
+    public void setTrattaBiglietto(TipoBiglietto trattaBiglietto) {
+        this.trattaBiglietto = trattaBiglietto;
     }
 
     @Override
     public String toString() {
         return "Biglietto{" +
-                "isTimbrato=" + isTimbrato +
-                ", tratta=" + tratta +
-                '}';
+                "isVidimato=" + isVidimato +
+                ", isValid=" + isValid +
+                ", trattaBiglietto=" + trattaBiglietto +
+                "} " + super.toString();
     }
 }

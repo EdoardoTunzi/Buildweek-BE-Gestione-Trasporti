@@ -1,10 +1,7 @@
 package dao;
 
 import com.github.javafaker.Faker;
-import entities.PuntoDiEmissione;
-import entities.Tessera;
-import entities.TitoloDiViaggio;
-import entities.Utente;
+import entities.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -64,7 +61,18 @@ public class TitoloDiViaggiDao {
                     .getSingleResult();
         } catch (NoResultException e) {
             System.out.println("nessun abbonamento valido associato alla tessera " + tesseraUtente);
+            return null;
         }
-        return null;
     }
+
+    public void vidimaBiglietto (Biglietto biglietto) {
+        biglietto.setVidimato(true);
+        biglietto.setValid(false);
+        System.out.println("Biglietto n°: " + biglietto.getId() + " vidimato! Non valido per altre tratte");
+    }
+
+
+
+
+
 }
