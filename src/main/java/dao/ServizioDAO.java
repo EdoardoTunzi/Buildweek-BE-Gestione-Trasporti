@@ -2,8 +2,11 @@ package dao;
 
 import entities.Mezzo;
 import entities.Servizio;
+import entities.Tratta;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 public class ServizioDAO {
 
@@ -31,5 +34,12 @@ public class ServizioDAO {
         em.remove(m);
         //gli dico di eseguire con commit
         em.getTransaction().commit();
+    }
+
+    public Long getNumeroTrattePerMezzo(Mezzo mezzo, Tratta tratta) {
+        Query q = em.createQuery("SELECT COUNT(s) FROM Servizio s WHERE s.mezzo = :mezzo AND s.tratta = :tratta");
+        q.setParameter("mezzo", mezzo);
+        q.setParameter("tratta", tratta);
+        return (Long) q.getSingleResult();
     }
 }

@@ -13,6 +13,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class Main {
@@ -43,8 +45,8 @@ public class Main {
         //puntoEmissioneDao.savePuntoEmissione(per);
         //puntoEmissioneDao.savePuntoEmissione(ped);
 
-        TitoloDiViaggio tvb = new Biglietto(18.90, LocalDate.of(2025, 1, 7), puntoEmissioneDao.getPuntoEmissioneById(1L), TipoBiglietto.ANDATA);
-        TitoloDiViaggio tva = new Abbonamento(21.90, LocalDate.of(2025,1,1), puntoEmissioneDao.getPuntoEmissioneById(2L), tesseraDao.getTesseraById(1L), TipoAbbonamento.MENSILE);
+        TitoloDiViaggio tvb = new Biglietto(12.90, LocalDate.of(2025, 1, 1), puntoEmissioneDao.getPuntoEmissioneById(1L), TipoBiglietto.ANDATA);
+        TitoloDiViaggio tva = new Abbonamento(21.90, LocalDate.of(2025, 1, 1), puntoEmissioneDao.getPuntoEmissioneById(2L), tesseraDao.getTesseraById(1L), TipoAbbonamento.MENSILE);
         //titolodiviaggioDao.saveTitoloDiViaggio(tvb);
         //titolodiviaggioDao.saveTitoloDiViaggio(tva);
 
@@ -73,12 +75,16 @@ public class Main {
 
         Manutenzione man1 = new Manutenzione(mezzoDao.getMezzoById(3), LocalDate.now(), LocalDate.now().plusDays(2));
         Manutenzione man2 = new Manutenzione(mezzoDao.getMezzoById(4), LocalDate.now(), LocalDate.now().plusDays(3));
-        manutenzioneDAO.saveManutenzione(man1);
-        manutenzioneDAO.saveManutenzione(man2);
+       /* manutenzioneDAO.saveManutenzione(man1);
+        manutenzioneDAO.saveManutenzione(man2);*/
 
+        //titolodiviaggioDao.vidimaBiglietto(titolodiviaggioDao.getBigliettoById(9L), servizioDAO.getServizioById(1));
 
+       /* List<TitoloDiViaggio> lista = titolodiviaggioDao.getBigliettiVidimatiPerDate(LocalDate.of(2024, 12, 1), LocalDate.now());
+        lista.forEach(System.out::println);*/
 
-
+        Long numeroTratte = servizioDAO.getNumeroTrattePerMezzo(mezzoDao.getMezzoById(1), trattaDAO.getTrattaById(1));
+        System.out.println("Numero di tratte percorse: " + numeroTratte);
 
         //---------------------- metodi dao ---------------------
 

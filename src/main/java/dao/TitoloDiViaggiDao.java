@@ -5,6 +5,7 @@ import entities.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,6 +26,10 @@ public class TitoloDiViaggiDao {
 
     public TitoloDiViaggio getTitoloDiViaggioById(long id) {
         return em.find(TitoloDiViaggio.class, id);
+    }
+
+    public Biglietto getBigliettoById(Long id) {
+        return em.find(Biglietto.class, id);
     }
 
 
@@ -65,14 +70,44 @@ public class TitoloDiViaggiDao {
         }
     }
 
-    public void vidimaBiglietto (Biglietto biglietto) {
-        biglietto.setVidimato(true);
-        biglietto.setValid(false);
-        System.out.println("Biglietto n°: " + biglietto.getId() + " vidimato! Non valido per altre tratte");
+   /* public void vidimaBiglietto (long id) {
+        Biglietto b = em.find(Biglietto.class, id);
+      *//* Query q = em.createQuery("SELECT b FROM Biglietto b WHERE b.id = :id ", Biglietto.class);*//*
+
+        b.setVidimato(true);
+        b.setValid(false);
+       em.getTransaction().begin();
+       em.
+        *//*System.out.println("Biglietto n°: " + biglietto.getId() + " vidimato! Non valido per altre tratte");*//*
+    }*/
+
+    public void vidimaBiglietto(Biglietto biglietto, Servizio servizio) {
+
+        if (!biglietto.getVidimato()) {
+            em.getTransaction().begin();
+            biglietto.setVidimato(true);
+            biglietto.setValid(false);
+            biglietto.setDataVidimazione(LocalDate.now());
+            servizio.getBigliettiVidimati().add(biglietto);
+
+            em.merge(biglietto);
+            em.merge(servizio);
+            em.getTransaction().commit();
+        } else {
+            System.out.println("Il biglietto che hai utilizzato non è valido perchè è già stato vidimato!");
+        }
     }
 
+    public List<TitoloDiViaggio> getBigliettiVidimatiSuUnMezzo(Mezzo mezzo) {
+        Query q = em.createQuery("SELECT b FROM Servizio s JOIN s.bigliettiVidimati b WHERE s.mezzo = :mezzo AND b.isVidimato = true ", Biglietto.class);
+        q.setParameter("mezzo", mezzo);
+        return q.getResultList();
+    }
 
-
-
-
+    public List<TitoloDiViaggio> getBigliettiVidimatiPerDate(LocalDate dataInizio, LocalDate dataFine) {
+        Query q = em.createQuery("SELECT b FROM Servizio s JOIN s.bigliettiVidimati b WHERE b.dataVidimazione BETWEEN :dataInizio AND :dataFine", Biglietto.class);
+        q.setParameter("dataInizio", dataInizio);
+        q.setParameter("dataFine", dataFine);
+        return q.getResultList();
+    }
 }

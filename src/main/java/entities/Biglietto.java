@@ -2,19 +2,18 @@ package entities;
 
 import enumerated.TipoBiglietto;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "biglietti")
 public class Biglietto extends TitoloDiViaggio {
-
+    @Column(nullable = false)
     private Boolean isVidimato;
-
+    @Column(nullable = false)
     private Boolean isValid;
+
+    private LocalDate dataVidimazione;
 
     @Enumerated(EnumType.STRING)
     private TipoBiglietto trattaBiglietto;
@@ -52,6 +51,14 @@ public class Biglietto extends TitoloDiViaggio {
 
     public void setTrattaBiglietto(TipoBiglietto trattaBiglietto) {
         this.trattaBiglietto = trattaBiglietto;
+    }
+
+    public LocalDate getDataVidimazione() {
+        return dataVidimazione;
+    }
+
+    public void setDataVidimazione(LocalDate dataVidimazione) {
+        this.dataVidimazione = dataVidimazione;
     }
 
     @Override
