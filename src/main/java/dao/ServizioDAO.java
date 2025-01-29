@@ -42,4 +42,19 @@ public class ServizioDAO {
         q.setParameter("tratta", tratta);
         return (Long) q.getSingleResult();
     }
+
+    public List<Servizio> getListaTratteETempiEffettiviPerMezzo(Mezzo mezzo, Tratta tratta){
+        Query q = em.createQuery("SELECT s FROM Servizio s WHERE s.mezzo = :mezzo AND s.tratta = :tratta", Servizio.class);
+        q.setParameter("mezzo", mezzo);
+        q.setParameter("tratta", tratta);
+        return q.getResultList();
+    }
+
+    // Metodo ADMIN per calcolo media tempo di percorrenza di una tratta di un mezzo
+    public Double getTempoMedioEffettivoPerTratta(Mezzo mezzo, Tratta tratta) {
+        Query q = em.createQuery("SELECT AVG(s.tempoEffettivo) FROM Servizio s  WHERE s.mezzo = :mezzo AND s.tratta = :tratta");
+        q.setParameter("mezzo", mezzo);
+        q.setParameter("tratta", tratta);
+        return (Double) q.getSingleResult();
+    }
 }

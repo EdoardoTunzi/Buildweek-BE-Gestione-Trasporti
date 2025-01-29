@@ -78,26 +78,42 @@ public class Main {
        /* manutenzioneDAO.saveManutenzione(man1);
         manutenzioneDAO.saveManutenzione(man2);*/
 
-        //titolodiviaggioDao.vidimaBiglietto(titolodiviaggioDao.getBigliettoById(9L), servizioDAO.getServizioById(1));
 
-       /* List<TitoloDiViaggio> lista = titolodiviaggioDao.getBigliettiVidimatiPerDate(LocalDate.of(2024, 12, 1), LocalDate.now());
-        lista.forEach(System.out::println);*/
-
-        Long numeroTratte = servizioDAO.getNumeroTrattePerMezzo(mezzoDao.getMezzoById(1), trattaDAO.getTrattaById(1));
-        System.out.println("Numero di tratte percorse: " + numeroTratte);
 
         //---------------------- metodi dao ---------------------
 
-        // ricerca all titoli di viaggio
+        // RICERCA DI TUTTI I TITOLI DI VIAGGIO
         //System.out.println(titolodiviaggioDao.ricercaListaTitoliViaggioEmessi());
 
-        //ricerca per punto di emissione
-        LocalDate dataInizio = LocalDate.of(2025, 1, 1);
+        //RICERCA TITOLI DI VIAGGIO PER PUNTO DI EMISSIONE
+       /* LocalDate dataInizio = LocalDate.of(2025, 1, 1);
         LocalDate dataFine = LocalDate.now();
-        //System.out.println(titolodiviaggioDao.ricercaTitoliViaggioPerPuntoEmissione(puntoEmissioneDao.getPuntoEmissioneById(2L), dataInizio, dataFine));
+        System.out.println(titolodiviaggioDao.ricercaTitoliViaggioPerPuntoEmissione(puntoEmissioneDao.getPuntoEmissioneById(2L), dataInizio, dataFine));*/
 
-
+        //VERIFICA ABBONAMENTO VALIDO DA NUMERO TESSERA
         //System.out.println(titolodiviaggioDao.verificaValiditàAbbonamentoTramiteNumeroTessera(tesseraDao.getTesseraById(2L)));
+
+        //METODO PER VIDIMARE BIGLIETTO
+        //titolodiviaggioDao.vidimaBiglietto(titolodiviaggioDao.getBigliettoById(9L), servizioDAO.getServizioById(1));
+
+        //RICERCA BIGLIETTI VIDIMATI IN UN PERIODO DI TEMPO
+       /* List<TitoloDiViaggio> lista = titolodiviaggioDao.getBigliettiVidimatiPerDate(LocalDate.of(2024, 12, 1), LocalDate.now());
+        lista.forEach(System.out::println);*/
+
+        //RICERCA NUMERO DI TRATTE PER MEZZO
+        /*Long numeroTratte = servizioDAO.getNumeroTrattePerMezzo(mezzoDao.getMezzoById(1), trattaDAO.getTrattaById(1));
+        System.out.println("Numero di tratte percorse: " + numeroTratte);*/
+
+        // Metodo ADMIN per calcolo media tempo di percorrenza di una tratta di un mezzo
+       /* Double mediaTratte = servizioDAO.getTempoMedioEffettivoPerTratta(mezzoDao.getMezzoById(1), trattaDAO.getTrattaById(1));
+        System.out.println("Il tempo medio di percorrenza delle tratte richieste è: " + mediaTratte + " minuti.");*/
+
+        // Metodo per cerca tempo effettivo di percorrenza di una tratta /mezzo
+       /* List<Servizio> listaServiziTempiEffettivi = servizioDAO.getListaTratteETempiEffettiviPerMezzo(mezzoDao.getMezzoById(1), trattaDAO.getTrattaById(1));
+        for (Servizio servizio : listaServiziTempiEffettivi) {
+            System.out.println("Tempo Effettivo: " + servizio.getTempoEffettivo());
+            }*/
+
 
 
         em.close();
