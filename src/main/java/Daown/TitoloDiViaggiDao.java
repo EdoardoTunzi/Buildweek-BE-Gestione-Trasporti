@@ -24,6 +24,7 @@ public class TitoloDiViaggiDao {
         em.getTransaction().commit();
     }
 
+
     public TitoloDiViaggio getTitoloDiViaggioById(long id) {
         return em.find(TitoloDiViaggio.class, id);
     }

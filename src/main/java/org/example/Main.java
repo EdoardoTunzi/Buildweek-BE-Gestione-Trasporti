@@ -217,28 +217,63 @@ public class Main {
 
                     break;
                 case 2:
-                    System.out.println("Inserisci il tuo ID amministratore");
-                    System.out.println("Benvenuto sul tuo profilo Amministratore");
+                    System.out.println("Inserisci il tuo codice Utente per verificare privilegi");
+                    Long codAmministratore = scanner.nextLong();
+                    scanner.nextLine();
+                    Utente utenteSuperiore = utenteDao.getUtenteById(codAmministratore);
+                    if(utenteSuperiore.getAmministratore()){
+                        System.out.println("Benvenuto sul tuo profilo Amministratore");
+                        System.out.println("⬇️MENU' GENERALE ADMIN⬇️");
+                        System.out.println("1 ➡️ Eliminare Abbonamenti");
+                        System.out.println("2 ➡️ Aggiungere/Eliminare Utenti");
+                        System.out.println("3 ➡️ Aggiungere/Eliminare Tessere");
+                        System.out.println("4 ➡️ Aggiungere/Eliminare Tratte");
+                        System.out.println("5 ➡️ Aggiungere/Eliminare Mezzi");
+                        System.out.println("6 ➡️ Visualizzare numero biglietti/abbonamenti in un dato periodo");
+                        System.out.println("7 ➡️ Visualizzare periodi servizio/manutenzione");
+                        System.out.println("8 ➡️ Visualizzare biglietti vidimati per un singolo mezzo");
+                        System.out.println("9 ➡️ Visualizzare biglietti vidimati per data");
+                        System.out.println("10 ➡️ Visualizzare il tempo medio effettivo per tratta");
+                        System.out.println("11 ➡️ Visualizzare il numero di volte di mezzo per tratta");
+                        System.out.println("0 ➡️ Per uscire dal programma");
 
-                    //SEZIONE AGGIUNTA E RIMOZIONE SWITCH 1
-                    //Aggiungere/Eliminare abbonamenti
-                    //Aggiungere/Eliminare utenti
-                    //Aggiungere/Eliminare Tessere
-                    //Aggiungere/Eliminare tratte
-                    //Aggiungere/Eliminare Mezzi
+                        int sceltacase2 = Integer.parseInt(scanner.nextLine());
+                        switch(sceltacase2){
+                            case 0:
+                                System.out.println("Sei uscito correttamente dal programma! Torna presto!");
+                                exit= true;
+                                break;
+                            case 1:
+                                System.out.println("Hai scelto di Eliminare l' abbonamento");
 
+                                break;
+                            case 2:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                            case 6:
+                                break;
+                                case 7:
+                                break;
+                                case 8:
+                                break;
+                                case 9:
+                                break;
+                                case 10:
+                                break;
+                                case 11:
+                                break;
+                            default:
+                                System.out.println("Mi sa che hai sbagliato qualcosa...");
+                                break;
 
-                    //GESTIONE VISUALIZZAZIONE SWITCH 2
-                    //Visualizzare numero biglietti/abbonamenti emessi in tot periodo
-                    //Visualizzare periodi servizio/manutenzione
-                    //Visualizzare biglietti vidimati su un singolo mezzo
-                    //Visualizzare biglietti vidimati per data
+                        }
+                    } else {
+                        System.out.println("Non hai i permessi per accedere a questa sezione!");
+                    }
 
-
-                    //GESTIONE PERCORRENZE SWITCH 3
-                    //Gestire percorrenze
-                    //Tempo medio effettivo per tratta
-                    //Numero di volte che un mezzo percorre una tratta
 
 
                     break;
