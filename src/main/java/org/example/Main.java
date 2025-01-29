@@ -46,7 +46,7 @@ public class Main {
 //        puntoEmissioneDao.savePuntoEmissione(per);
 //        puntoEmissioneDao.savePuntoEmissione(ped);
 
-        TitoloDiViaggio tvb = new Biglietto(12.90, LocalDate.of(2025, 1, 1), puntoEmissioneDao.getPuntoEmissioneById(1L), TipoBiglietto.ANDATA);
+        TitoloDiViaggio tvb = new Biglietto(12.90, LocalDate.of(2025, 1, 1), puntoEmissioneDao.getPuntoEmissioneById(1L));
         TitoloDiViaggio tva = new Abbonamento(21.90, LocalDate.of(2025, 1, 1), puntoEmissioneDao.getPuntoEmissioneById(2L), tesseraDao.getTesseraById(1L), TipoAbbonamento.MENSILE);
 //        titolodiviaggioDao.saveTitoloDiViaggio(tvb);
 //        titolodiviaggioDao.saveTitoloDiViaggio(tva);
@@ -84,47 +84,167 @@ public class Main {
         //---------------------- Interfaccia Utente ---------------------
         boolean exit = false;
 
-        System.out.println("Benvenuto sul gestionale Epicode trasporti Roma! ");
-        System.out.println("➡️Inserisci 1 se vuoi accedere come utente");
-        System.out.println("➡️Inserisci 2 se vuoi accedere come amministratore");
-        int user = Integer.parseInt(scanner.nextLine());
-
-        while(!exit){
-            if(user==1){  //UTENTE SEMPLICE
-                System.out.println("Benvenuto sul tuo profilo Utente");
-                //Acquistare biglietti
-                //Acquistare abbonamenti
-                //Timbrare biglietti
-                //Scegliere acquisto tra distributori automatici e rivenditori
-
-            }else if(user==2){ // UTENTE AMMINISTRATORE
-           //     System.out.println("Inserisci il tuo ID amministratore");
-
-                System.out.println("Benvenuto sul tuo profilo Amministratore");
-
-                //SEZIONE AGGIUNTA E RIMOZIONE SWITCH 1
-                //Aggiungere/Eliminare abbonamenti
-                //Aggiungere/Eliminare utenti
-                //Aggiungere/Eliminare Tessere
-                //Aggiungere/Eliminare tratte
-                //Aggiungere/Eliminare Mezzi
 
 
-                //GESTIONE VISUALIZZAZIONE SWITCH 2
-                //Visualizzare numero biglietti/abbonamenti emessi in tot periodo
-                //Visualizzare periodi servizio/manutenzione
-                //Visualizzare biglietti vidimati su un singolo mezzo
-                //Visualizzare biglietti vidimati per data
+        while(!exit) {
+            System.out.println("Benvenuto sul gestionale Epicode trasporti Roma! ");
+            System.out.println("➡️Inserisci 1 se vuoi accedere come utente");
+            System.out.println("➡️Inserisci 2 se vuoi accedere come amministratore");
+            System.out.println("➡️Inserisci 0 per uscire dal programma");
+            int user = Integer.parseInt(scanner.nextLine());
+            switch (user) {
+                case 0:
+                    System.out.println("Sei uscito correttamente dal programma! Torna presto!");
+                    exit= true;
+                    break;
+                case 1:
+
+                    System.out.println("Benvenuto sul tuo profilo Utente");
+                    System.out.println("Cosa vuoi fare?");
+                    System.out.println("➡️Inserisci 1 se vuoi acquistare un biglietto");
+                    System.out.println("➡️Inserisci 2 se vuoi acquistare un abbonamento");
+                    System.out.println("➡️Inserisci 3 per timbrare il biglietto");
+
+                    int sceltacase1 = Integer.parseInt(scanner.nextLine());
+                    switch(sceltacase1){
+                        case 1:
+                            System.out.println("Hai scelto di acquistare un biglietto!");
+                            System.out.println("Vuoi acquistare il biglietto in un distrubutore(1) o tramite un rivenditore(2)?");
+                           int sceltaLuogo = Integer.parseInt(scanner.nextLine());
+                            if(sceltaLuogo == 1){
+                                System.out.println("Hai scelto di acquistare tramite un distrubutore Automatico!");
+                                double prezzo= 12.50;
+                                LocalDate dataEmissione = LocalDate.now();
+                                PuntoDiEmissione puntoDiEmissione = puntoEmissioneDao.getPuntoEmissioneById(2);
+                                TitoloDiViaggio bigliettoCreato = new Biglietto(prezzo, dataEmissione, puntoDiEmissione);
+                                titolodiviaggioDao.saveTitoloDiViaggio(bigliettoCreato);
+                                System.out.println("Biglietto acquistato correttamente!");
+                                System.out.println("Codice biglietto:"+ bigliettoCreato.getId());
+
+                            }else if(sceltaLuogo == 2){
+                                System.out.println("Hai scelto di acquistare tramite un rivenditore!");
+                                double prezzo= 12.50;
+                                LocalDate dataEmissione = LocalDate.now();
+                                PuntoDiEmissione puntoDiEmissione = puntoEmissioneDao.getPuntoEmissioneById(1);
+                                TitoloDiViaggio bigliettoCreato = new Biglietto(prezzo, dataEmissione, puntoDiEmissione);
+                                titolodiviaggioDao.saveTitoloDiViaggio(bigliettoCreato);
+                                System.out.println("Biglietto acquistato correttamente!");
+                                System.out.println("Codice biglietto:"+ bigliettoCreato.getId());
+                            }else{
+                                System.out.println("Operazione non valida!");
+                            }
 
 
-                //GESTIONE PERCORRENZE SWITCH 3
-                //Gestire percorrenze
-                //Tempo medio effettivo per tratta
-                //Numero di volte che un mezzo percorre una tratta
+                            break;
+                        case 2:
+                            System.out.println("Hai scelto di acquistare un abbonamento!");
+                            System.out.println("Per comprare un abbonamento inserire il numero tessera Utente");
+                            String tessera = scanner.nextLine();
+                        Tessera tesseraUtente = tesseraDao.getTesseraByNumeroTessera(tessera);
 
-            }else{
-                System.out.println("Opzione non valida");
-                exit = true;
+                            System.out.println("Vuoi acquistare l'abbonamento in un distrubutore(1) o tramite un rivenditore(2)?");
+                            int sceltaLuogo2 = Integer.parseInt(scanner.nextLine());
+                            if(sceltaLuogo2 == 1){
+                                System.out.println("Hai scelto di acquistare tramite un distrubutore Automatico!");
+                                double prezzo= 35.50;
+                                LocalDate dataEmissione = LocalDate.now();
+                                PuntoDiEmissione puntoDiEmissione = puntoEmissioneDao.getPuntoEmissioneById(2);
+                                System.out.println("Digita 1 per inserire un abbonamento MENSILE o 2 per inserire un abbonamento SETTIMANALE");
+                                int sceltaAbbonamento = Integer.parseInt(scanner.nextLine());
+                                if(sceltaAbbonamento == 1){
+                                    System.out.println("Hai scelto di acquistare un abbonamento MENSILE");
+                                    TitoloDiViaggio abbonamentoCreato = new Abbonamento(prezzo, dataEmissione, puntoDiEmissione,tesseraUtente,TipoAbbonamento.MENSILE);
+                                    titolodiviaggioDao.saveTitoloDiViaggio(abbonamentoCreato);
+                                    System.out.println("Abbonamento acquistato correttamente!");
+                                    System.out.println("Codice abbonamento:"+ abbonamentoCreato.getId());
+                                } else if (sceltaAbbonamento == 2) {
+                                    System.out.println("Hai scelto di acquistare un abbonamento SETTIMANALE");
+                                    TitoloDiViaggio abbonamentoCreato = new Abbonamento(prezzo, dataEmissione, puntoDiEmissione,tesseraUtente,TipoAbbonamento.SETTIMANALE);
+                                    titolodiviaggioDao.saveTitoloDiViaggio(abbonamentoCreato);
+                                    System.out.println("Abbonamento acquistato correttamente!");
+                                    System.out.println("Codice abbonamento:"+ abbonamentoCreato.getId());
+
+                                }
+                            }else if(sceltaLuogo2 == 2){
+                                System.out.println("Hai scelto di acquistare tramite un rivenditore!");
+                                double prezzo= 35.50;
+                                LocalDate dataEmissione = LocalDate.now();
+                                PuntoDiEmissione puntoDiEmissione = puntoEmissioneDao.getPuntoEmissioneById(2);
+                                System.out.println("Digita 1 per inserire un abbonamento MENSILE o 2 per inserire un abbonamento SETTIMANALE");
+                                int sceltaAbbonamento = Integer.parseInt(scanner.nextLine());
+                                if(sceltaAbbonamento == 1){
+                                    System.out.println("Hai scelto di acquistare un abbonamento MENSILE");
+                                    TitoloDiViaggio abbonamentoCreato = new Abbonamento(prezzo, dataEmissione, puntoDiEmissione,tesseraUtente,TipoAbbonamento.MENSILE);
+                                    titolodiviaggioDao.saveTitoloDiViaggio(abbonamentoCreato);
+                                    System.out.println("Abbonamento acquistato correttamente!");
+                                    System.out.println("Codice abbonamento:"+ abbonamentoCreato.getId());
+                                } else if (sceltaAbbonamento == 2) {
+                                    System.out.println("Hai scelto di acquistare un abbonamento SETTIMANALE");
+                                    TitoloDiViaggio abbonamentoCreato = new Abbonamento(prezzo, dataEmissione, puntoDiEmissione,tesseraUtente,TipoAbbonamento.SETTIMANALE);
+                                    titolodiviaggioDao.saveTitoloDiViaggio(abbonamentoCreato);
+                                    System.out.println("Abbonamento acquistato correttamente!");
+                                    System.out.println("Codice abbonamento:"+ abbonamentoCreato.getId());
+                                }
+
+                            }else{
+                                System.out.println("Operazione non valida!");
+                            }
+
+                            break;
+                        case 3:
+                            System.out.println("Hai scelto di timbrare il biglietto!");
+                            System.out.println("Inserisci il numero del biglietto");
+                            Long nBiglietto = scanner.nextLong();
+                            scanner.nextLine();
+                            Biglietto bigliettoUtente = titolodiviaggioDao.getBigliettoById(nBiglietto);
+                            System.out.println("Seleziona la linea desiderata(1-3)");
+                            Long nLinea = scanner.nextLong();
+                            scanner.nextLine();
+                            if(nLinea==1){
+                                System.out.println("Hai scelto la prima linea come servizio");
+                                titolodiviaggioDao.vidimaBiglietto(bigliettoUtente,servizioDAO.getServizioById(nLinea));
+                            } else if (nLinea==2) {
+                                System.out.println("Hai scelto la seconda linea come servizio");
+                                titolodiviaggioDao.vidimaBiglietto(bigliettoUtente,servizioDAO.getServizioById(nLinea));
+                            }else if (nLinea==3) {
+                                System.out.println("Hai scelto la terza linea come servizio");
+                                titolodiviaggioDao.vidimaBiglietto(bigliettoUtente,servizioDAO.getServizioById(nLinea));
+                            }else{
+                                System.out.println("Opzione non valida!");
+                            }
+                            break;
+                    }
+
+                    break;
+                case 2:
+                    System.out.println("Inserisci il tuo ID amministratore");
+                    System.out.println("Benvenuto sul tuo profilo Amministratore");
+
+                    //SEZIONE AGGIUNTA E RIMOZIONE SWITCH 1
+                    //Aggiungere/Eliminare abbonamenti
+                    //Aggiungere/Eliminare utenti
+                    //Aggiungere/Eliminare Tessere
+                    //Aggiungere/Eliminare tratte
+                    //Aggiungere/Eliminare Mezzi
+
+
+                    //GESTIONE VISUALIZZAZIONE SWITCH 2
+                    //Visualizzare numero biglietti/abbonamenti emessi in tot periodo
+                    //Visualizzare periodi servizio/manutenzione
+                    //Visualizzare biglietti vidimati su un singolo mezzo
+                    //Visualizzare biglietti vidimati per data
+
+
+                    //GESTIONE PERCORRENZE SWITCH 3
+                    //Gestire percorrenze
+                    //Tempo medio effettivo per tratta
+                    //Numero di volte che un mezzo percorre una tratta
+
+
+                    break;
+                default:
+                    System.out.println("Operazione non valida");
+                    break;
             }
         }
 

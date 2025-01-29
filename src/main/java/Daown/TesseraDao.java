@@ -1,8 +1,10 @@
 package Daown;
 
+import entities.Biglietto;
 import entities.Tessera;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 public class TesseraDao {
 
@@ -22,6 +24,11 @@ public class TesseraDao {
         return em.find(Tessera.class, id);
     }
 
+    public Tessera getTesseraByNumeroTessera(String numeroTessera) {
+        Query q = em.createQuery("SELECT t FROM Tessera t WHERE t.numeroTessera = :numeroTessera", Tessera.class);
+        q.setParameter("numeroTessera",numeroTessera );
+        return (Tessera) q.getSingleResult();
+    }
 
     public void deleteTessera(Tessera t) {
         em.getTransaction().begin();
