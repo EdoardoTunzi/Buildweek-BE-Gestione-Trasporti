@@ -1,34 +1,35 @@
-package dao;
+package Daown;
 
-import entities.Servizio;
-import entities.Tratta;
+import entities.Tessera;
 
 import javax.persistence.EntityManager;
 
-public class TrattaDAO {
+public class TesseraDao {
+
     private EntityManager em;
 
-    public TrattaDAO(EntityManager em) {
+    public TesseraDao(EntityManager em) {
         this.em = em;
     }
 
-    public void saveTratta(Tratta m) {
+    public void saveTessera(Tessera t) {
         em.getTransaction().begin();
-        em.persist(m);
+        em.persist(t);
         em.getTransaction().commit();
     }
 
-    public Tratta getTrattaById(long id) {
-        return em.find(Tratta.class, id);
+    public Tessera getTesseraById(long id) {
+        return em.find(Tessera.class, id);
     }
 
 
-    public void deleteTratta(Tratta m) {
+    public void deleteTessera(Tessera t) {
         em.getTransaction().begin();
         // gli do l'istruzione che voglio eseguire- inm questo caso persist() per salvare su db
         //e gli passo nel parametro cosa rimuovere
-        em.remove(m);
+        em.remove(t);
         //gli dico di eseguire con commit
         em.getTransaction().commit();
     }
+
 }
