@@ -102,10 +102,10 @@ public class TitoloDiViaggiDao {
         }
     }
 
-    public List<TitoloDiViaggio> getBigliettiVidimatiSuUnMezzo(Mezzo mezzo) {
-        Query q = em.createQuery("SELECT b FROM Servizio s JOIN s.bigliettiVidimati b WHERE s.mezzo = :mezzo AND b.isVidimato = true ", Biglietto.class);
+    public Long getBigliettiVidimatiSuUnMezzo(Mezzo mezzo) {
+        Query q = em.createQuery("SELECT COUNT(b) FROM Servizio s JOIN s.bigliettiVidimati b WHERE s.mezzo = :mezzo AND b.isVidimato = true ");
         q.setParameter("mezzo", mezzo);
-        return q.getResultList();
+        return (Long) q.getSingleResult();
     }
 
     public List<TitoloDiViaggio> getBigliettiVidimatiPerDate(LocalDate dataInizio, LocalDate dataFine) {

@@ -4,6 +4,7 @@ import entities.Tessera;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.time.LocalDate;
 
 public class TesseraDao {
 
@@ -36,6 +37,17 @@ public class TesseraDao {
         em.remove(t);
         //gli dico di eseguire con commit
         em.getTransaction().commit();
+    }
+    public void rinnovoTessera(Tessera tessera){
+        if(tessera.getDataScadenza().isBefore(LocalDate.now())){
+            em.getTransaction().begin();
+            tessera.setDataScadenza(LocalDate.now().plusYears(1));
+            em.merge(tessera);
+            em.getTransaction().commit();
+            System.out.println("La tessera è stata rinnovata con successo!");
+        }else{
+            System.out.println("La tessera da rinnovare non è ancora scaduta!");
+        }
     }
 
 }

@@ -101,7 +101,12 @@ public class Main {
 
                             System.out.println("Benvenuto sul tuo profilo Utente");
                             System.out.println("Cosa vuoi fare?");
-                            System.out.println("➡️ Inserisci 1 per acquistare un biglietto , 2 per acquistare un abbonamento, 3 per vidimare il biglietto");
+                            System.out.println("1 ➡️ Acquistare un biglietto ");
+                            System.out.println("2 ➡️ Acquistare un abbonamento");
+                            System.out.println("3 ➡️ Vidimare il biglietto");
+                            System.out.println("4 ➡️ Rinnovare la tessera scaduta ");
+                            System.out.println("5 ➡️ Aggiungi/Elimina servizi ");
+                            System.out.println("6 ➡️ Aggiungi/Elimina manutenzione ");
 
                             int sceltacase1 = Integer.parseInt(scanner.nextLine());
                             switch (sceltacase1) {
@@ -204,6 +209,36 @@ public class Main {
                                         System.out.println("Operazione non valida! - devi selezionare una tra le opzioni disponibili");
                                     }
                                     break;
+                                case 4:
+                                    System.out.println("Hai scelto di rinnovare la tessera scaduta!");
+                                    System.out.println("Inserisci il numero di tessera da rinnovare: ");
+                                    String numeroTessera = scanner.nextLine();
+                                    tesseraDao.rinnovoTessera(tesseraDao.getTesseraByNumeroTessera(numeroTessera));
+                                    break;
+                                case 5:
+                                    System.out.println("Hai scelto di aggiungere/eliminare un servizio!");
+                                    System.out.println("Per aggiungere un servizio (1) o o per eliminare un servizio (2)");
+                                    int sceltaServizio = Integer.parseInt(scanner.nextLine());
+                                    if(sceltaServizio == 1){
+                                        System.out.println("Hai scelto di aggiungere un servizio!");
+                                        System.out.println("Inserisci l'id del mezzo:  ");
+                                        Long mezzo = Long.parseLong(scanner.nextLine());
+                                        System.out.println("Inserisci l'id della tratta: ");
+                                        Long tratta = Long.parseLong(scanner.nextLine());
+                                        System.out.println("Inserisci il tempo effettivo: ");
+                                        int tempoEffettivo = Integer.parseInt(scanner.nextLine());
+                                        servizioDAO.saveServizio(new Servizio(mezzoDao.getMezzoById(mezzo), trattaDAO.getTrattaById(tratta), tempoEffettivo));
+                                        System.out.println("Servizio aggiunto con successo!");
+                                    }else if(sceltaServizio == 2){
+                                        System.out.println("Hai scelto di eliminare un servizio!");
+                                        System.out.println("Inserisci l'id del servizio da eliminare: ");
+                                        Long idServizio = Long.parseLong(scanner.nextLine());
+                                        servizioDAO.deleteServizio(servizioDAO.getServizioById(idServizio));
+                                        System.out.println("Servizio eliminato con successo!");
+                                    }
+                                    break;
+                                case 6:
+                                    break;
                             }
 
                             break;
@@ -227,6 +262,7 @@ public class Main {
                                 System.out.println("10 ➡️ Ricerca dei titoli di viaggio per punto di emissione");
                                 System.out.println("11 ➡️ Verifica abbonamento dal numero di tessera");
                                 System.out.println("12 ➡️ Ricerca dei biglietti vidimati in un periodo di tempo");
+                                System.out.println("13 ️➡️ Ricerca numero biglietti vidimati su un particolare mezzo ");
 
                                 System.out.println("0 ➡️ Per uscire dal programma");
 
@@ -432,6 +468,12 @@ public class Main {
                                         List<TitoloDiViaggio> lista2 = titolodiviaggioDao.getBigliettiVidimatiPerDate(inizioPeriodo, finePeriodo);
                                         lista2.forEach(System.out::println);
                                         break;
+                                    case 13:
+                                        System.out.println("Hai selezionato la ricerca di biglietti vidimati su un particolare mezzo!");
+                                        System.out.println("Inserisci l'id del mezzo: ");
+                                        Long idMezzo3 = Long.parseLong(scanner.nextLine());
+                                        System.out.println("I biglietti totali vidimati sul mezzo con id: " + idMezzo3 + " sono: " + titolodiviaggioDao.getBigliettiVidimatiSuUnMezzo(mezzoDao.getMezzoById(idMezzo3)));
+                                        break;
 
                                     default:
                                         System.out.println("Operazione non valida! - devi selezionare una tra le opzioni disponibili");
@@ -460,7 +502,6 @@ public class Main {
                     System.out.println("Errore: " + e.getMessage());
                 }
             }
-
 
 
 
