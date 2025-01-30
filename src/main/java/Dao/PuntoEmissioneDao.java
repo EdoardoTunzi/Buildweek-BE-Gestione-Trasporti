@@ -1,33 +1,35 @@
-package Daown;
+package Dao;
 
-import entities.Tratta;
+import entities.PuntoDiEmissione;
 
 import javax.persistence.EntityManager;
 
-public class TrattaDAO {
+public class PuntoEmissioneDao {
+
     private EntityManager em;
 
-    public TrattaDAO(EntityManager em) {
+    public PuntoEmissioneDao(EntityManager em) {
         this.em = em;
     }
 
-    public void saveTratta(Tratta m) {
+    public void savePuntoEmissione(PuntoDiEmissione p) {
         em.getTransaction().begin();
-        em.persist(m);
+        em.persist(p);
         em.getTransaction().commit();
     }
 
-    public Tratta getTrattaById(long id) {
-        return em.find(Tratta.class, id);
+    public PuntoDiEmissione getPuntoEmissioneById(long id) {
+        return em.find(PuntoDiEmissione.class, id);
     }
 
 
-    public void deleteTratta(Tratta m) {
+    public void deletePuntoEmissione(PuntoDiEmissione p) {
         em.getTransaction().begin();
         // gli do l'istruzione che voglio eseguire- inm questo caso persist() per salvare su db
         //e gli passo nel parametro cosa rimuovere
-        em.remove(m);
+        em.remove(p);
         //gli dico di eseguire con commit
         em.getTransaction().commit();
     }
+
 }

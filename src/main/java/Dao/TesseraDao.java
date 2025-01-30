@@ -1,6 +1,5 @@
-package Daown;
+package Dao;
 
-import entities.Biglietto;
 import entities.Tessera;
 
 import javax.persistence.EntityManager;

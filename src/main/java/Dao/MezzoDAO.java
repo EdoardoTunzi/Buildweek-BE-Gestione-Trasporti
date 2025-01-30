@@ -1,35 +1,33 @@
-package Daown;
+package Dao;
 
-import entities.PuntoDiEmissione;
+import entities.Mezzo;
 
 import javax.persistence.EntityManager;
 
-public class PuntoEmissioneDao {
-
+public class MezzoDAO {
     private EntityManager em;
 
-    public PuntoEmissioneDao(EntityManager em) {
+    public MezzoDAO(EntityManager em) {
         this.em = em;
     }
 
-    public void savePuntoEmissione(PuntoDiEmissione p) {
+    public void saveMezzo(Mezzo m) {
         em.getTransaction().begin();
-        em.persist(p);
+        em.persist(m);
         em.getTransaction().commit();
     }
 
-    public PuntoDiEmissione getPuntoEmissioneById(long id) {
-        return em.find(PuntoDiEmissione.class, id);
+    public Mezzo getMezzoById(long id) {
+        return em.find(Mezzo.class, id);
     }
 
 
-    public void deletePuntoEmissione(PuntoDiEmissione p) {
+    public void deleteMezzo(Mezzo m) {
         em.getTransaction().begin();
         // gli do l'istruzione che voglio eseguire- inm questo caso persist() per salvare su db
         //e gli passo nel parametro cosa rimuovere
-        em.remove(p);
+        em.remove(m);
         //gli dico di eseguire con commit
         em.getTransaction().commit();
     }
-
 }

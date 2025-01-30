@@ -1,4 +1,4 @@
-package Daown;
+package Dao;
 
 import com.github.javafaker.Faker;
 import entities.*;

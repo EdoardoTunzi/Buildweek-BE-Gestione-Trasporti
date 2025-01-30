@@ -1,33 +1,35 @@
-package Daown;
+package Dao;
 
-import entities.Mezzo;
+import entities.Utente;
 
 import javax.persistence.EntityManager;
 
-public class MezzoDAO {
+public class UtenteDao {
+
     private EntityManager em;
 
-    public MezzoDAO(EntityManager em) {
+    public UtenteDao(EntityManager em) {
         this.em = em;
     }
 
-    public void saveMezzo(Mezzo m) {
+    public void saveUtente(Utente u) {
         em.getTransaction().begin();
-        em.persist(m);
+        em.persist(u);
         em.getTransaction().commit();
     }
 
-    public Mezzo getMezzoById(long id) {
-        return em.find(Mezzo.class, id);
+    public Utente getUtenteById(long id) {
+        return em.find(Utente.class, id);
     }
 
 
-    public void deleteMezzo(Mezzo m) {
+    public void deleteUtente(Utente u) {
         em.getTransaction().begin();
         // gli do l'istruzione che voglio eseguire- inm questo caso persist() per salvare su db
         //e gli passo nel parametro cosa rimuovere
-        em.remove(m);
+        em.remove(u);
         //gli dico di eseguire con commit
         em.getTransaction().commit();
     }
+
 }

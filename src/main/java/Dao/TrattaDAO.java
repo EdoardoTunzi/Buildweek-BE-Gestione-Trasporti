@@ -1,28 +1,28 @@
-package Daown;
+package Dao;
 
-import entities.Manutenzione;
+import entities.Tratta;
 
 import javax.persistence.EntityManager;
 
-public class ManutenzioneDAO {
+public class TrattaDAO {
     private EntityManager em;
 
-    public ManutenzioneDAO(EntityManager em) {
+    public TrattaDAO(EntityManager em) {
         this.em = em;
     }
 
-    public void saveManutenzione(Manutenzione m) {
+    public void saveTratta(Tratta m) {
         em.getTransaction().begin();
         em.persist(m);
         em.getTransaction().commit();
     }
 
-    public Manutenzione getManutenzioneById(long id) {
-        return em.find(Manutenzione.class, id);
+    public Tratta getTrattaById(long id) {
+        return em.find(Tratta.class, id);
     }
 
 
-    public void deleteManutenzione(Manutenzione m) {
+    public void deleteTratta(Tratta m) {
         em.getTransaction().begin();
         // gli do l'istruzione che voglio eseguire- inm questo caso persist() per salvare su db
         //e gli passo nel parametro cosa rimuovere

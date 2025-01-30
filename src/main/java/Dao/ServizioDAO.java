@@ -1,4 +1,4 @@
-package Daown;
+package Dao;
 
 import entities.Mezzo;
 import entities.Servizio;

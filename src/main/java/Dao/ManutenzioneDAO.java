@@ -1,35 +1,33 @@
-package Daown;
+package Dao;
 
-import entities.Utente;
+import entities.Manutenzione;
 
 import javax.persistence.EntityManager;
 
-public class UtenteDao {
-
+public class ManutenzioneDAO {
     private EntityManager em;
 
-    public UtenteDao(EntityManager em) {
+    public ManutenzioneDAO(EntityManager em) {
         this.em = em;
     }
 
-    public void saveUtente(Utente u) {
+    public void saveManutenzione(Manutenzione m) {
         em.getTransaction().begin();
-        em.persist(u);
+        em.persist(m);
         em.getTransaction().commit();
     }
 
-    public Utente getUtenteById(long id) {
-        return em.find(Utente.class, id);
+    public Manutenzione getManutenzioneById(long id) {
+        return em.find(Manutenzione.class, id);
     }
 
 
-    public void deleteUtente(Utente u) {
+    public void deleteManutenzione(Manutenzione m) {
         em.getTransaction().begin();
         // gli do l'istruzione che voglio eseguire- inm questo caso persist() per salvare su db
         //e gli passo nel parametro cosa rimuovere
-        em.remove(u);
+        em.remove(m);
         //gli dico di eseguire con commit
         em.getTransaction().commit();
     }
-
 }
