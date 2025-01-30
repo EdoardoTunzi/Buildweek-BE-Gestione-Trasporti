@@ -232,10 +232,12 @@ public class Main {
                         System.out.println("5 ➡️ Aggiungere/Eliminare Mezzi");
                         System.out.println("6 ➡️ Visualizzare numero biglietti/abbonamenti in un dato periodo");
                         System.out.println("7 ➡️ Ricerca numero di tratte per mezzo ");
-                        System.out.println("8 ➡️ Calcolo media tempo di percorrenza di una tratta di un mezzo");
+                        System.out.println("8 ➡️ Calcolo della media tempo di percorrenza di una tratta di un mezzo");
                         System.out.println("9 ➡️ Cerca il tempo effettivo di percorrenza di una tratta/mezzo");
-                        System.out.println("10 ➡️ Ricerca titolo di viaggio per punto di emissione");
-                        System.out.println("11 ➡️ Visualizzare il numero di volte di mezzo per tratta");
+                        System.out.println("10 ➡️ Ricerca del titolo di viaggio per punto di emissione");
+                        System.out.println("11 ➡️ Verifica abbonamento dal numero di tessera");
+                        System.out.println("12 ➡️ Ricerca dei biglietti vidimati in un periodo di tempo");
+
                         System.out.println("0 ➡️ Per uscire dal programma");
 
                         int sceltacase2 = Integer.parseInt(scanner.nextLine());
@@ -420,13 +422,24 @@ public class Main {
 
                                     List<TitoloDiViaggio> lista1 =  titolodiviaggioDao.ricercaTitoliViaggioPerPuntoEmissione(puntoEmissioneDao
                                             .getPuntoEmissioneById(idEmissione), dataInizio1, dataFine1);
-                                    lista1.forEach(
-                                            System.out::println
-                                    );
+                                    lista1.forEach(System.out::println);
 
                                 break;
                                 case 11:
+                                    System.out.println("Hai selezionato la verifica dell'abbonamento valido da numero di tessera!");
+                                    System.out.println("Inserisci il numero di tessera: ");
+                                    String idTessera = scanner.nextLine();
+                                    System.out.println(titolodiviaggioDao.verificaValiditàAbbonamentoTramiteNumeroTessera(tesseraDao.getTesseraByNumeroTessera(idTessera)));
+
                                 break;
+                            case 12:
+                                System.out.println("Hai selezionato la ricerca di biglietti vidimati in un periodo di tempo");
+                                System.out.println("Inserisci la data dalla quale vuoi iniziare la ricerca: ");
+                                LocalDate inizioPeriodo = LocalDate.parse(scanner.nextLine());
+                                List<TitoloDiViaggio> lista2 = titolodiviaggioDao.getBigliettiVidimatiPerDate(inizioPeriodo, LocalDate.now());
+                                lista2.forEach(System.out::println);
+                                break;
+
                             default:
                                 System.out.println("Mi sa che hai sbagliato qualcosa...");
                                 break;
@@ -455,13 +468,15 @@ public class Main {
         LocalDate dataFine = LocalDate.now();
         System.out.println(titolodiviaggioDao.ricercaTitoliViaggioPerPuntoEmissione(puntoEmissioneDao.getPuntoEmissioneById(2L), dataInizio, dataFine));*/
 
-        //VERIFICA ABBONAMENTO VALIDO DA NUMERO TESSERA
+        //VERIFICA ABBONAMENTO VALIDO DA NUMERO TESSERA - OK
         //System.out.println(titolodiviaggioDao.verificaValiditàAbbonamentoTramiteNumeroTessera(tesseraDao.getTesseraById(2L)));
 
         //METODO PER VIDIMARE BIGLIETTO - OK
-        //titolodiviaggioDao.vidimaBiglietto(titolodiviaggioDao.getBigliettoById(9L), servizioDAO.getServizioById(1));
+//        titolodiviaggioDao.vidimaBiglietto(titolodiviaggioDao.getBigliettoById(14L), servizioDAO.getServizioById(3));
+//        titolodiviaggioDao.vidimaBiglietto(titolodiviaggioDao.getBigliettoById(16L), servizioDAO.getServizioById(2));
+//        titolodiviaggioDao.vidimaBiglietto(titolodiviaggioDao.getBigliettoById(18L), servizioDAO.getServizioById(4));
 
-        //RICERCA BIGLIETTI VIDIMATI IN UN PERIODO DI TEMPO
+        //RICERCA BIGLIETTI VIDIMATI IN UN PERIODO DI TEMPO - OK
        /* List<TitoloDiViaggio> lista = titolodiviaggioDao.getBigliettiVidimatiPerDate(LocalDate.of(2024, 12, 1), LocalDate.now());
         lista.forEach(System.out::println);*/
 
