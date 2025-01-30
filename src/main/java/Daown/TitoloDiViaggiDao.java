@@ -43,8 +43,11 @@ public class TitoloDiViaggiDao {
         em.getTransaction().commit();
     }
 
-    public List<TitoloDiViaggio> ricercaListaTitoliViaggioEmessi() {
-        return em.createQuery("SELECT tv FROM TitoloDiViaggio tv", TitoloDiViaggio.class).getResultList();
+    public List<TitoloDiViaggio> ricercaListaTitoliViaggioEmessiPerPeriodo(LocalDate dataInizio, LocalDate dataFine) {
+        return em.createQuery("SELECT tv FROM TitoloDiViaggio tv WHERE tv.dataEmissione BETWEEN  :dataInizio AND :dataFine", TitoloDiViaggio.class)
+                .setParameter("dataInizio", dataInizio)
+                .setParameter("dataFine", dataFine)
+                .getResultList();
     }
 
 

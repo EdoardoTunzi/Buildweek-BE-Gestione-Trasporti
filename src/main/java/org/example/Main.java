@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -36,10 +37,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         Tessera t = new Tessera(faker.number().digits(8), LocalDate.now());
-        tesseraDao.saveTessera(t);
+//        tesseraDao.saveTessera(t);
 
         Utente u = new Utente(faker.name().firstName(), faker.name().lastName(), tesseraDao.getTesseraById(4L), false);
-        utenteDao.saveUtente(u);
+//        utenteDao.saveUtente(u);
 
         PuntoDiEmissione ped = new DistributoreAutomatico(faker.company().name(), true);
         PuntoDiEmissione per = new RivenditoreAutorizzato(faker.company().name(), faker.address().fullAddress());
@@ -230,10 +231,10 @@ public class Main {
                         System.out.println("4 ➡️ Aggiungere/Eliminare Tratte");
                         System.out.println("5 ➡️ Aggiungere/Eliminare Mezzi");
                         System.out.println("6 ➡️ Visualizzare numero biglietti/abbonamenti in un dato periodo");
-                        System.out.println("7 ➡️ Visualizzare periodi servizio/manutenzione");
-                        System.out.println("8 ➡️ Visualizzare biglietti vidimati per un singolo mezzo");
-                        System.out.println("9 ➡️ Visualizzare biglietti vidimati per data");
-                        System.out.println("10 ➡️ Visualizzare il tempo medio effettivo per tratta");
+                        System.out.println("7 ➡️ Ricerca numero di tratte per mezzo ");
+                        System.out.println("8 ➡️ Calcolo media tempo di percorrenza di una tratta di un mezzo");
+                        System.out.println("9 ➡️ Cerca il tempo effettivo di percorrenza di una tratta/mezzo");
+                        System.out.println("10 ➡️ Ricerca titolo di viaggio per punto di emissione");
                         System.out.println("11 ➡️ Visualizzare il numero di volte di mezzo per tratta");
                         System.out.println("0 ➡️ Per uscire dal programma");
 
@@ -245,23 +246,184 @@ public class Main {
                                 break;
                             case 1:
                                 System.out.println("Hai scelto di Eliminare l' abbonamento");
-
+                                System.out.println("Inserisci l'id dell'abbonamento: ");
+                                Long id = Long.parseLong(scanner.nextLine());
+                                titolodiviaggioDao.deleteTitoloDiViaggio(titolodiviaggioDao.getTitoloDiViaggioById(id));
+                                if(titolodiviaggioDao.getTitoloDiViaggioById(id) == null){
+                                    System.out.println("Abbonamento: " + id +" rimosso correttamente!");
+                                }else{
+                                    System.out.println("Operazione fallita! ");
+                                }
                                 break;
                             case 2:
+                                System.out.println("Per Aggiungere un utente: 1 o Per Eliminare un utente: 2");
+                                int scelta = Integer.parseInt(scanner.nextLine());
+                                if(scelta == 1){
+                                    System.out.println("Hai scelto di aggiungere un utente!");
+                                    System.out.println("Inserisci nome utente: ");
+                                    String nome = scanner.nextLine();
+                                    System.out.println("Inserisci cognome utente: ");
+                                    String cognome = scanner.nextLine();
+                                    System.out.println("Sei amministratore?");
+                                    System.out.println("true o false");
+                                    String amministratore = scanner.nextLine();
+                                    if(amministratore.equals("true")){
+                                        utenteDao.saveUtente(new Utente(nome, cognome, null, true));
+                                        System.out.println("Utente amministratore creato correttamente!");
+                                    }else if(amministratore.equals("false")){
+                                        utenteDao.saveUtente(new Utente(nome, cognome, null, false));
+                                        System.out.println("Utente semplice creato con successo!");
+                                    }else{
+                                        System.out.println("Valore inserito non valido!");
+                                    }
+                                }else if(scelta == 2){
+                                    System.out.println("Hai scelto di eliminare un utente!");
+                                    System.out.println("Inserisci l'id dell'utente: ");
+                                    Long id2 = Long.parseLong(scanner.nextLine());
+                                    utenteDao.deleteUtente(utenteDao.getUtenteById(id2));
+                                    if(utenteDao.getUtenteById(id2) == null){
+                                        System.out.println("Operazione avvenuta correttamente!");
+                                    }else{
+                                        System.out.println("Operazione fallita!");
+                                    }
+                                }else{
+                                    System.out.println("Scelta inserita non valida!");
+                                }
+                                break;
+                            case 3:
+                                System.out.println("Per Aggiungere una tessera: 1 o Per Eliminare una tessera: 2");
+                                int scelta1 = Integer.parseInt(scanner.nextLine());
+                                if(scelta1 == 1){
+                                    System.out.println("Hai scelto di aggiungere una tessera!");
+                                    String numeroTessera = faker.number().digits(8);
+                                    tesseraDao.saveTessera(new Tessera( numeroTessera, LocalDate.now()));
+                                    System.out.println("Nuova tessera creata: " + numeroTessera + "!");
+                                }else if(scelta1 == 2){
+                                    System.out.println("Hai scelto di eliminare una tessera!");
+                                    System.out.println("Inserisci l'id della tessera da eliminare:");
+                                    Long idTessera = Long.parseLong(scanner.nextLine());
+                                    tesseraDao.deleteTessera(tesseraDao.getTesseraById(idTessera));
+                                    if(tesseraDao.getTesseraById(idTessera) == null){
+                                        System.out.println("Operazione avvenuta correttamente!");
+                                    }else{
+                                        System.out.println("Operazione fallita!");
+                                    }
+                                }else{
+                                    System.out.println("Scelta inserita non valida!");
+                                }
                                 break;
                             case 4:
+                                System.out.println("Per Aggiungere una tratta: 1 o Per Eliminare una tratta: 2");
+                                int scelta2 = Integer.parseInt(scanner.nextLine());
+                                if(scelta2 == 1){
+                                    System.out.println("Inserisci una zona di partenza: ");
+                                    String zonaDiPartenza = scanner.nextLine();
+                                    System.out.println("Inserisci il capolinea: ");
+                                    String capolinea = scanner.nextLine();
+                                    System.out.println("Inscerisci il tempo previsto di percorrenza: ");
+                                    int tempoPrevistoPercorrenza = Integer.parseInt(scanner.nextLine());
+                                    trattaDAO.saveTratta(new Tratta(zonaDiPartenza, capolinea, tempoPrevistoPercorrenza));
+                                    System.out.println("Tratta aggiunta con successo! ");
+                                }else if(scelta2 == 2){
+                                    System.out.println("Hai scelto di eliminare una tratta!");
+                                    System.out.println("Inserisci l'id della tratta da eliminare:");
+                                    Long idTratta = Long.parseLong(scanner.nextLine());
+                                    trattaDAO.deleteTratta(trattaDAO.getTrattaById(idTratta));
+                                    if(trattaDAO.getTrattaById(idTratta) == null){
+                                        System.out.println("Tratta eliminata con successo!");
+                                    }else{
+                                        System.out.println("Operazione fallita!");
+                                    }
+                                }else{
+                                    System.out.println("Scelta inserita non valida!");
+                                }
                                 break;
                             case 5:
+                                System.out.println("Per Aggiungere un mezzo: 1 o Per Eliminare un mezzo: 2");
+                                int scelta3 = Integer.parseInt(scanner.nextLine());
+                                if(scelta3 == 1){
+                                    System.out.println("Hai scelto di aggiungere un mezzo!");
+                                    System.out.println("Che mezzo vuoi aggiungere? 1 per tram; 2 per autobus");
+                                    int mezzo = Integer.parseInt(scanner.nextLine());
+                                    if(mezzo == 1){
+                                        System.out.println("Inserisci la capienza del mezzo: ");
+                                        int capienza = Integer.parseInt(scanner.nextLine());
+                                        mezzoDao.saveMezzo(new Tram(capienza, StatoMezzo.IN_SERVIZIO));
+                                        System.out.println("Tram creato con successo");
+                                    }else if(mezzo == 2){
+                                        System.out.println("Inserisci la capienza del mezzo: ");
+                                        int capienza = Integer.parseInt(scanner.nextLine());
+                                        mezzoDao.saveMezzo(new Autobus(capienza, StatoMezzo.IN_SERVIZIO));
+                                        System.out.println("Autobus creato con successo");
+                                    }else{
+                                        System.out.println("Scelta inserita non valida!");
+                                    }
+                                }else if(scelta3 == 2){
+                                    System.out.println("Hai scelto di eliminare un mezzo!");
+                                    System.out.println("Inserisci l'id del mezzo: ");
+                                    Long idMezzo = Long.parseLong(scanner.nextLine());
+                                    mezzoDao.deleteMezzo(mezzoDao.getMezzoById(idMezzo));
+                                    if(mezzoDao.getMezzoById(idMezzo) == null){
+                                        System.out.println("Mezzo eliminato con successo!");
+                                    }else {
+                                        System.out.println("Operazione fallita!");
+                                    }
+                                }else{
+                                    System.out.println("Scelta inserita non valida!");
+                                }
                                 break;
                             case 6:
+                                System.out.println("Hai scelto di visualizzare i titoli di viaggio emessi in un periodo!");
+                                System.out.println("Inserisci la data di inizio: ");
+                                LocalDate dataInizio = LocalDate.parse(scanner.nextLine());
+                                System.out.println("Inserisci la data di fine: ");
+                                LocalDate dataFine = LocalDate.parse(scanner.nextLine());
+                                List<TitoloDiViaggio> lista = titolodiviaggioDao.ricercaListaTitoliViaggioEmessiPerPeriodo(dataInizio, dataFine);
+                                lista.forEach(System.out::println);
                                 break;
                                 case 7:
+                                    System.out.println("Inserisci l'id del mezzo da controllare: ");
+                                    Long idMezzo = Long.parseLong(scanner.nextLine());
+                                    System.out.println("Inserisci l'id della tratta da controllare: ");
+                                    Long idTratta = Long.parseLong(scanner.nextLine());
+                                    Long numeroTratte = servizioDAO.getNumeroTrattePerMezzo(mezzoDao.getMezzoById(idMezzo), trattaDAO.getTrattaById(idTratta));
+                                    System.out.println("Numero di tratte percorse: " + numeroTratte);
                                 break;
                                 case 8:
+                                    System.out.println("Hai scelto di calcolare la media di tempo di percorrenza di una tratta di un mezzo");
+                                    System.out.println("Inserisci l'id del mezzo da controllare: ");
+                                    Long idMezzo1 = Long.parseLong(scanner.nextLine());
+                                    System.out.println("Inserisci l'id della tratta da controllare: ");
+                                    Long idTratta1 = Long.parseLong(scanner.nextLine());
+                                    Double mediaTratte = servizioDAO.getTempoMedioEffettivoPerTratta(mezzoDao.getMezzoById(idMezzo1), trattaDAO.getTrattaById(idTratta1));
+                                    System.out.println("Il tempo medio di percorrenza delle tratte richieste è: " + mediaTratte + " minuti.");
                                 break;
                                 case 9:
+                                    System.out.println("Hai scelto di calcolare il tempo effettivo di percorrenza di una tratta/mezzo");
+                                    System.out.println("Inserisci l'id del mezzo da controllare: ");
+                                    Long idMezzo2 = Long.parseLong(scanner.nextLine());
+                                    System.out.println("Inserisci l'id della tratta da controllare: ");
+                                    Long idTratta2 = Long.parseLong(scanner.nextLine());
+                                    List<Servizio> listaServiziTempiEffettivi = servizioDAO.getListaTratteETempiEffettiviPerMezzo(mezzoDao.getMezzoById(idMezzo2), trattaDAO.getTrattaById(idTratta2));
+                                    for (Servizio servizio : listaServiziTempiEffettivi) {
+                                        System.out.println("Tempo Effettivo della " + servizio.getTratta() + " è di " +servizio.getTempoEffettivo() + " minuti");
+                                    }
                                 break;
                                 case 10:
+                                    System.out.println("Hai scelto la ricerca di titoli di viaggio per punto di emissione");
+                                    System.out.println("Inserisci l'id del punto di emissione: ");
+                                    Long idEmissione = Long.parseLong(scanner.nextLine());
+                                    System.out.println("Inserisci la data di inizio: ");
+                                    LocalDate dataInizio1 = LocalDate.parse(scanner.nextLine());
+                                    System.out.println("Inserisci la data di fine: ");
+                                    LocalDate dataFine1 = LocalDate.parse(scanner.nextLine());
+
+                                    List<TitoloDiViaggio> lista1 =  titolodiviaggioDao.ricercaTitoliViaggioPerPuntoEmissione(puntoEmissioneDao
+                                            .getPuntoEmissioneById(idEmissione), dataInizio1, dataFine1);
+                                    lista1.forEach(
+                                            System.out::println
+                                    );
+
                                 break;
                                 case 11:
                                 break;
@@ -285,10 +447,10 @@ public class Main {
 
         //---------------------- metodi dao ---------------------
 
-        // RICERCA DI TUTTI I TITOLI DI VIAGGIO
+        // RICERCA DI TUTTI I TITOLI DI VIAGGIO - OK
         //System.out.println(titolodiviaggioDao.ricercaListaTitoliViaggioEmessi());
 
-        //RICERCA TITOLI DI VIAGGIO PER PUNTO DI EMISSIONE
+        //RICERCA TITOLI DI VIAGGIO PER PUNTO DI EMISSIONE - OK
        /* LocalDate dataInizio = LocalDate.of(2025, 1, 1);
         LocalDate dataFine = LocalDate.now();
         System.out.println(titolodiviaggioDao.ricercaTitoliViaggioPerPuntoEmissione(puntoEmissioneDao.getPuntoEmissioneById(2L), dataInizio, dataFine));*/
@@ -296,22 +458,22 @@ public class Main {
         //VERIFICA ABBONAMENTO VALIDO DA NUMERO TESSERA
         //System.out.println(titolodiviaggioDao.verificaValiditàAbbonamentoTramiteNumeroTessera(tesseraDao.getTesseraById(2L)));
 
-        //METODO PER VIDIMARE BIGLIETTO
+        //METODO PER VIDIMARE BIGLIETTO - OK
         //titolodiviaggioDao.vidimaBiglietto(titolodiviaggioDao.getBigliettoById(9L), servizioDAO.getServizioById(1));
 
         //RICERCA BIGLIETTI VIDIMATI IN UN PERIODO DI TEMPO
        /* List<TitoloDiViaggio> lista = titolodiviaggioDao.getBigliettiVidimatiPerDate(LocalDate.of(2024, 12, 1), LocalDate.now());
         lista.forEach(System.out::println);*/
 
-        //RICERCA NUMERO DI TRATTE PER MEZZO
+        //RICERCA NUMERO DI TRATTE PER MEZZO - OK
         /*Long numeroTratte = servizioDAO.getNumeroTrattePerMezzo(mezzoDao.getMezzoById(1), trattaDAO.getTrattaById(1));
         System.out.println("Numero di tratte percorse: " + numeroTratte);*/
 
-        // Metodo ADMIN per calcolo media tempo di percorrenza di una tratta di un mezzo
+        // Metodo ADMIN per calcolo media tempo di percorrenza di una tratta di un mezzo - OK
        /* Double mediaTratte = servizioDAO.getTempoMedioEffettivoPerTratta(mezzoDao.getMezzoById(1), trattaDAO.getTrattaById(1));
         System.out.println("Il tempo medio di percorrenza delle tratte richieste è: " + mediaTratte + " minuti.");*/
 
-        // Metodo per cerca tempo effettivo di percorrenza di una tratta /mezzo
+        // Metodo per cerca tempo effettivo di percorrenza di una tratta /mezzo - OK
        /* List<Servizio> listaServiziTempiEffettivi = servizioDAO.getListaTratteETempiEffettiviPerMezzo(mezzoDao.getMezzoById(1), trattaDAO.getTrattaById(1));
         for (Servizio servizio : listaServiziTempiEffettivi) {
             System.out.println("Tempo Effettivo: " + servizio.getTempoEffettivo());
