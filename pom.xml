@@ -30,15 +30,6 @@
       <version>1.0.2</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.5.16</version>
-      <scope>test</scope>
-    </dependency>
-
-
     <!-- dipendenza hibernate -->
     <dependency>
       <groupId>org.hibernate</groupId>
