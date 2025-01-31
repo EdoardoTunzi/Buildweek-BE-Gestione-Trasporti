@@ -33,7 +33,7 @@ public class InterfacciaUser {
     public void gestioneUI() {
         boolean exit = false;
 
-        while(!exit) {
+        while (!exit) {
             try {
                 System.out.println(" ----------------------- Benvenuto sul gestionale Epicode trasporti Roma! ----------------------- ");
                 System.out.println("➡️Inserisci 1 se vuoi accedere come utente");
@@ -410,7 +410,7 @@ public class InterfacciaUser {
                                     System.out.println("Hai scelto di aggiungere/eliminare un servizio!");
                                     System.out.println("Per aggiungere un servizio (1) o o per eliminare un servizio (2)");
                                     int sceltaServizio = Integer.parseInt(scanner.nextLine());
-                                    if(sceltaServizio == 1){
+                                    if (sceltaServizio == 1) {
                                         System.out.println("Hai scelto di aggiungere un servizio!");
                                         System.out.println("Inserisci l'id del mezzo:  ");
                                         Long mezzo = Long.parseLong(scanner.nextLine());
@@ -420,7 +420,7 @@ public class InterfacciaUser {
                                         int tempoEffettivo = Integer.parseInt(scanner.nextLine());
                                         servizioDAO.saveServizio(new Servizio(mezzoDao.getMezzoById(mezzo), trattaDAO.getTrattaById(tratta), tempoEffettivo));
                                         System.out.println("Servizio aggiunto con successo!");
-                                    }else if(sceltaServizio == 2){
+                                    } else if (sceltaServizio == 2) {
                                         System.out.println("Hai scelto di eliminare un servizio!");
                                         System.out.println("Inserisci l'id del servizio da eliminare: ");
                                         Long idServizio = Long.parseLong(scanner.nextLine());
@@ -433,7 +433,7 @@ public class InterfacciaUser {
                                     System.out.println("Per aggiungere una manutenzione(1) o o per eliminare una manutenzione (2)");
                                     int scelta5 = Integer.parseInt(scanner.nextLine());
 
-                                    if(scelta5 == 1) {
+                                    if (scelta5 == 1) {
                                         System.out.println("Crea manutenzione");
                                         System.out.println("Inserisci l'id del mezzo da mettere in manutenzione");
                                         long idMezzo4 = Long.parseLong(scanner.nextLine());
@@ -441,8 +441,18 @@ public class InterfacciaUser {
                                         LocalDate dataInizioMan = LocalDate.parse(scanner.nextLine());
                                         System.out.println("Inserisci la data di fine manutenzione ( yyyy-mm-dd)");
                                         LocalDate dataFineMan = LocalDate.parse(scanner.nextLine());
-                                        manutenzioneDAO.saveManutenzione(new Manutenzione(mezzoDao.getMezzoById(idMezzo4), dataInizioMan, dataFineMan));
-                                        System.out.println("Manutenzione aggiunta con successo!");
+                                        Mezzo mezzoConStatoInManutenzione = mezzoDao.getMezzoById(idMezzo4);
+
+                                        if (mezzoConStatoInManutenzione == null) {
+                                            System.out.println("il mezzo con ID: " + idMezzo4 + " non esiste");
+                                        } else {
+                                            mezzoConStatoInManutenzione.setStatoMezzo(StatoMezzo.IN_MANUTENZIONE);
+                                            mezzoDao.saveMezzo(mezzoConStatoInManutenzione);
+                                            manutenzioneDAO.saveManutenzione(new Manutenzione(mezzoDao.getMezzoById(idMezzo4), dataInizioMan, dataFineMan));
+                                            System.out.println("Manutenzione aggiunta con successo!");
+                                        }
+
+
                                     } else if (scelta5 == 2) {
                                         System.out.println("Inserisci l'id della manutenzione da eliminare");
                                         long idMan = Long.parseLong(scanner.nextLine());
@@ -451,6 +461,7 @@ public class InterfacciaUser {
                                         System.out.println("Operazione non valida! - devi selezionare una tra le opzioni disponibili");
                                     }
 
+                                    break;
                                 default:
                                     System.out.println("Operazione non valida! - devi selezionare una tra le opzioni disponibili");
                                     break;
@@ -468,13 +479,13 @@ public class InterfacciaUser {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Il valore da inserire deve essere numerico .errore: " + e.getMessage());
-            }catch(InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("L'input inserito non valido!" + e.getMessage());
-            }catch(RuntimeException e){
+            } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
-            }catch (StackOverflowError e){
+            } catch (StackOverflowError e) {
                 System.out.println(e.getMessage());
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Errore: " + e.getMessage());
             }
         }

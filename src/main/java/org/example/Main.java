@@ -23,8 +23,9 @@ public class Main {
     private static InterfacciaUser intUser = new InterfacciaUser();
 
     public static void main(String[] args) {
+
         //Metodo per creazione DB
-        intUser.inizializzazioneDB();
+        //intUser.inizializzazioneDB();
         //Interfaccia Utente
         intUser.gestioneUI();
 
