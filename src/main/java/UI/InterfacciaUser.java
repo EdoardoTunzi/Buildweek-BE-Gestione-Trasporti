@@ -35,28 +35,28 @@ public class InterfacciaUser {
 
         while (!exit) {
             try {
-                System.out.println(" ----------------------- Benvenuto sul gestionale Epicode trasporti Roma! ----------------------- ");
-                System.out.println("➡️Inserisci 1 se vuoi accedere come utente");
-                System.out.println("➡️Inserisci 2 se vuoi accedere come amministratore");
-                System.out.println("➡️Inserisci 0 per uscire dal programma");
+                System.out.println(" -----------------------🏧 Benvenuto sul gestionale Epicode trasporti Roma! 🏧----------------------- ");
+                System.out.println("➡️Inserisci 1 se vuoi accedere come utente 👤");
+                System.out.println("➡️Inserisci 2 se vuoi accedere come amministratore 🛡️");
+                System.out.println("➡️Inserisci 0 per uscire dal programma 🚨");
                 int user = Integer.parseInt(scanner.nextLine());
 
                 switch (user) {
                     case 0:
-                        System.out.println("Sei uscito correttamente dal programma! Torna presto!");
+                        System.out.println("Sei uscito correttamente dal programma! Torna presto 🫂!");
                         exit = true;
                         break;
                     case 1:
                         boolean exitUser = false;
                         while (!exitUser) {
 
-                            System.out.println("---------------Benvenuto sul tuo profilo Utente---------------");
+                            System.out.println("---------------⬇️ Benvenuto sul tuo profilo Utente 👤⬇️---------------");
                             System.out.println("Cosa vuoi fare ?");
-                            System.out.println(" 1 ➡️ Acquistare un biglietto ");
-                            System.out.println(" 2 ➡️ Acquistare un abbonamento");
-                            System.out.println(" 3 ➡️ Vidimare il biglietto");
-                            System.out.println(" 4 ➡️ Rinnovare la tessera scaduta ");
-                            System.out.println(" 0 ➡️ Per tornare al menu principale");
+                            System.out.println(" 1 ➡️ Acquistare un biglietto 💳 ");
+                            System.out.println(" 2 ➡️ Acquistare un abbonamento 🪪");
+                            System.out.println(" 3 ➡️ Vidimare il biglietto 💳");
+                            System.out.println(" 4 ➡️ Rinnovare la tessera scaduta 🪪");
+                            System.out.println(" 0 ➡️ Per tornare al menu principale 🛎️");
 
                             int sceltacase1 = Integer.parseInt(scanner.nextLine());
                             switch (sceltacase1) {
@@ -65,40 +65,40 @@ public class InterfacciaUser {
                                     exitUser = true;
                                     break;
                                 case 1:
-                                    System.out.println("Hai scelto di acquistare un biglietto!");
-                                    System.out.println("Vuoi acquistare il biglietto in un distrubutore(1) o tramite un rivenditore(2)?");
+                                    System.out.println("Hai scelto di acquistare un biglietto 💳!");
+                                    System.out.println("Vuoi acquistare 🛒 il biglietto in un distrubutore(1) o tramite un rivenditore(2)?");
                                     int sceltaLuogo = Integer.parseInt(scanner.nextLine());
                                     if (sceltaLuogo == 1) {
-                                        System.out.println("Hai scelto di acquistare tramite un distrubutore Automatico!");
+                                        System.out.println("Hai scelto di acquistare tramite un distrubutore Automatico 🏧!");
                                         double prezzo = 12.50;
                                         LocalDate dataEmissione = LocalDate.now();
                                         PuntoDiEmissione puntoDiEmissione = puntoEmissioneDao.getPuntoEmissioneById(2);
                                         TitoloDiViaggio bigliettoCreato = new Biglietto(prezzo, dataEmissione, puntoDiEmissione);
                                         titolodiviaggioDao.saveTitoloDiViaggio(bigliettoCreato);
-                                        System.out.println("Ecco a te il biglietto numero: " + bigliettoCreato.getId());
+                                        System.out.println("Ecco a te il biglietto numero: 💳" + bigliettoCreato.getId());
 
                                     } else if (sceltaLuogo == 2) {
-                                        System.out.println("Hai scelto di acquistare tramite un rivenditore!");
+                                        System.out.println("Hai scelto di acquistare 🛒 tramite un rivenditore !");
                                         double prezzo = 12.50;
                                         LocalDate dataEmissione = LocalDate.now();
                                         PuntoDiEmissione puntoDiEmissione = puntoEmissioneDao.getPuntoEmissioneById(1);
                                         TitoloDiViaggio bigliettoCreato = new Biglietto(prezzo, dataEmissione, puntoDiEmissione);
                                         titolodiviaggioDao.saveTitoloDiViaggio(bigliettoCreato);
-                                        System.out.println("Ecco a te il biglietto numero: " + bigliettoCreato.getId());
+                                        System.out.println("Ecco a te il biglietto numero: 💳" + bigliettoCreato.getId());
                                     } else {
                                         System.out.println("Operazione non valida! - devi selezionare una tra le opzioni disponibili");
                                     }
                                     break;
                                 case 2:
-                                    System.out.println("Hai scelto di acquistare un abbonamento!");
-                                    System.out.println("Per comprare un abbonamento inserire il numero tessera Utente: ");
+                                    System.out.println("Hai scelto di acquistare un abbonamento 🪪!");
+                                    System.out.println("Per comprare un abbonamento inserire il numero tessera Utente:  🪪 ");
                                     String tessera = scanner.nextLine();
                                     Tessera tesseraUtente = tesseraDao.getTesseraByNumeroTessera(tessera);
 
-                                    System.out.println("Vuoi acquistare l'abbonamento in un distrubutore(1) o tramite un rivenditore(2)?");
+                                    System.out.println("Vuoi acquistare l'abbonamento in un distrubutore 🏧 (1) o tramite un rivenditore (2) 🏪?");
                                     int sceltaLuogo2 = Integer.parseInt(scanner.nextLine());
                                     if (sceltaLuogo2 == 1) {
-                                        System.out.println("Hai scelto di acquistare tramite un distrubutore Automatico!");
+                                        System.out.println("Hai scelto di acquistare tramite un distrubutore 🏧 Automatico!");
                                         double prezzo = 35.50;
                                         LocalDate dataEmissione = LocalDate.now();
                                         PuntoDiEmissione puntoDiEmissione = puntoEmissioneDao.getPuntoEmissioneById(2);
@@ -116,7 +116,7 @@ public class InterfacciaUser {
                                             System.out.println("Ecco a te l'abbonamento numero: " + abbonamentoCreato.getId());
                                         }
                                     } else if (sceltaLuogo2 == 2) {
-                                        System.out.println("Hai scelto di acquistare tramite un rivenditore!");
+                                        System.out.println("Hai scelto di acquistare tramite un rivenditore 🏪!");
                                         double prezzo = 35.50;
                                         LocalDate dataEmissione = LocalDate.now();
                                         PuntoDiEmissione puntoDiEmissione = puntoEmissioneDao.getPuntoEmissioneById(2);
@@ -139,8 +139,8 @@ public class InterfacciaUser {
                                     }
                                     break;
                                 case 3:
-                                    System.out.println("Hai scelto di vidimare il biglietto!");
-                                    System.out.println("Inserisci il numero del biglietto");
+                                    System.out.println("Hai scelto di vidimare il biglietto 💳!");
+                                    System.out.println("Inserisci il numero del biglietto 💳");
                                     Long nBiglietto = scanner.nextLong();
                                     scanner.nextLine();
                                     Biglietto bigliettoUtente = titolodiviaggioDao.getBigliettoById(nBiglietto);
@@ -164,8 +164,8 @@ public class InterfacciaUser {
                                     }
                                     break;
                                 case 4:
-                                    System.out.println("Hai scelto di rinnovare la tessera scaduta!");
-                                    System.out.println("Inserisci il numero di tessera da rinnovare: ");
+                                    System.out.println("Hai scelto di rinnovare la tessera 🪪 scaduta!");
+                                    System.out.println("Inserisci il numero di tessera 🪪 da rinnovare: ");
                                     String numeroTessera = scanner.nextLine();
                                     tesseraDao.rinnovoTessera(tesseraDao.getTesseraByNumeroTessera(numeroTessera));
                                     break;
@@ -181,31 +181,31 @@ public class InterfacciaUser {
                         boolean exitAdmin = false;
 
 
-                        System.out.println("Inserisci il tuo id Utente per verificare privilegi: ");
+                        System.out.println("Inserisci il tuo id Utente 👤 per verificare privilegi: ");
                         Long codAmministratore = scanner.nextLong();
                         scanner.nextLine();
                         Utente utenteSuperiore = utenteDao.getUtenteById(codAmministratore);
 
                         if (utenteSuperiore.getAmministratore()) {
                             while (!exitAdmin) {
-                                System.out.println("Benvenuto sul tuo profilo Amministratore");
+                                System.out.println("---------------🛡️ Benvenuto sul tuo profilo Amministratore 🛡️---------------");
 
-                                System.out.println("---------------⬇️MENU' GENERALE ADMIN⬇️---------------");
-                                System.out.println(" 1 ➡️ Eliminare Abbonamenti");
-                                System.out.println(" 2 ➡️ Aggiungere/Eliminare Utenti");
-                                System.out.println(" 3 ➡️ Aggiungere/Eliminare Tessere");
-                                System.out.println(" 4 ➡️ Aggiungere/Eliminare Tratte");
-                                System.out.println(" 5 ➡️ Aggiungere/Eliminare Mezzi");
+                                System.out.println("---------------⬇️   MENU' GENERALE ADMIN   ⬇️---------------");
+                                System.out.println(" 1 ➡️ Eliminare Abbonamenti 💳");
+                                System.out.println(" 2 ➡️ Aggiungere/Eliminare Utenti 👤");
+                                System.out.println(" 3 ➡️ Aggiungere/Eliminare Tessere 🪪");
+                                System.out.println(" 4 ➡️ Aggiungere/Eliminare Tratte 🪧");
+                                System.out.println(" 5 ➡️ Aggiungere/Eliminare Mezzi 🚌/🚃");
                                 System.out.println(" 6 ➡️ Visualizzare i titoli di viaggio emessi in un dato periodo");
                                 System.out.println(" 7 ➡️ Ricerca il numero di tratte per mezzo ");
                                 System.out.println(" 8 ➡️ Calcolo della media tempo di percorrenza di una tratta da un mezzo");
                                 System.out.println(" 9 ➡️ Visualizza il tempo effettivo di percorrenza di una tratta/mezzo");
                                 System.out.println(" 10 ➡️ Ricerca dei titoli di viaggio per punto di emissione");
-                                System.out.println(" 11 ➡️ Verifica abbonamento dal numero di tessera");
-                                System.out.println(" 12 ➡️ Ricerca dei biglietti vidimati in un periodo di tempo");
-                                System.out.println(" 13 ➡️ Ricerca numero biglietti vidimati su un particolare mezzo ");
-                                System.out.println(" 14 ➡️ Aggiungere/Eliminare Servizi");
-                                System.out.println(" 15 ➡️ Aggiungere/Eliminare Manutenzione");
+                                System.out.println(" 11 ➡️ Verifica abbonamento dal numero di tessera 🪪");
+                                System.out.println(" 12 ➡️ Ricerca dei biglietti 💳 vidimati in un periodo di tempo");
+                                System.out.println(" 13 ➡️ Ricerca numero biglietti 💳 vidimati su un particolare mezzo ");
+                                System.out.println(" 14 ➡️ Aggiungere/Eliminare Servizi 🛅");
+                                System.out.println(" 15 ➡️ Aggiungere/Eliminare Manutenzione 🧑‍🔧");
 
                                 System.out.println(" 0 ➡️ Per tornare al menu principale");
 
@@ -216,7 +216,7 @@ public class InterfacciaUser {
                                         exitAdmin = true;
                                         break;
                                     case 1:
-                                        System.out.println("Hai scelto di eliminare l'abbonamento");
+                                        System.out.println("Hai scelto di eliminare l'abbonamento 🪪");
                                         System.out.println("Inserisci l'id dell'abbonamento: ");
                                         Long id = Long.parseLong(scanner.nextLine());
                                         titolodiviaggioDao.deleteTitoloDiViaggio(titolodiviaggioDao.getTitoloDiViaggioById(id));
@@ -419,7 +419,7 @@ public class InterfacciaUser {
                                         break;
                                     case 14:
                                         System.out.println("Hai scelto di aggiungere/eliminare un servizio!");
-                                        System.out.println("Per aggiungere un servizio (1) o o per eliminare un servizio (2)");
+                                        System.out.println("Per aggiungere un servizio (1) o per eliminare un servizio (2)");
                                         int sceltaServizio = Integer.parseInt(scanner.nextLine());
                                         if (sceltaServizio == 1) {
                                             System.out.println("Hai scelto di aggiungere un servizio!");
@@ -441,7 +441,7 @@ public class InterfacciaUser {
                                         break;
                                     case 15:
                                         System.out.println("Hai scelto di aggiungere/eliminare una manutenzione!");
-                                        System.out.println("Per aggiungere una manutenzione(1) o o per eliminare una manutenzione (2)");
+                                        System.out.println("Per aggiungere una manutenzione(1) o per eliminare una manutenzione (2)");
                                         int scelta5 = Integer.parseInt(scanner.nextLine());
 
                                         if (scelta5 == 1) {
@@ -464,7 +464,7 @@ public class InterfacciaUser {
                                                 System.out.println("Manutenzione aggiunta con successo!");
                                             }
                                         } else if (scelta5 == 2) {
-                                            System.out.println("Inserisci l'id della manutenzione da eliminare");
+                                            System.out.println("Inserisci l'id  della manutenzione da eliminare");
                                             long idMan = Long.parseLong(scanner.nextLine());
 
                                             Mezzo messoInServizio = manutenzioneDAO.getManutenzioneById(idMan).getMezzo();
