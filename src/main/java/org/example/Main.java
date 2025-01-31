@@ -90,8 +90,8 @@ public class Main {
                     System.out.println("➡️Inserisci 1 se vuoi accedere come utente");
                     System.out.println("➡️Inserisci 2 se vuoi accedere come amministratore");
                     System.out.println("➡️Inserisci 0 per uscire dal programma");
-
                     int user = Integer.parseInt(scanner.nextLine());
+
                     switch (user) {
                         case 0:
                             System.out.println("Sei uscito correttamente dal programma! Torna presto!");
@@ -105,11 +105,14 @@ public class Main {
                             System.out.println("2 ➡️ Acquistare un abbonamento");
                             System.out.println("3 ➡️ Vidimare il biglietto");
                             System.out.println("4 ➡️ Rinnovare la tessera scaduta ");
-                            System.out.println("5 ➡️ Aggiungi/Elimina servizi ");
-                            System.out.println("6 ➡️ Aggiungi/Elimina manutenzione ");
+                            System.out.println("0 ➡️ Per uscire dal programma");
 
                             int sceltacase1 = Integer.parseInt(scanner.nextLine());
                             switch (sceltacase1) {
+                                case 0:
+                                    System.out.println("Sei uscito correttamente dal programma! Torna presto!");
+                                    exit = true;
+                                    break;
                                 case 1:
                                     System.out.println("Hai scelto di acquistare un biglietto!");
                                     System.out.println("Vuoi acquistare il biglietto in un distrubutore(1) o tramite un rivenditore(2)?");
@@ -215,30 +218,8 @@ public class Main {
                                     String numeroTessera = scanner.nextLine();
                                     tesseraDao.rinnovoTessera(tesseraDao.getTesseraByNumeroTessera(numeroTessera));
                                     break;
-                                case 5:
-                                    System.out.println("Hai scelto di aggiungere/eliminare un servizio!");
-                                    System.out.println("Per aggiungere un servizio (1) o o per eliminare un servizio (2)");
-                                    int sceltaServizio = Integer.parseInt(scanner.nextLine());
-                                    if(sceltaServizio == 1){
-                                        System.out.println("Hai scelto di aggiungere un servizio!");
-                                        System.out.println("Inserisci l'id del mezzo:  ");
-                                        Long mezzo = Long.parseLong(scanner.nextLine());
-                                        System.out.println("Inserisci l'id della tratta: ");
-                                        Long tratta = Long.parseLong(scanner.nextLine());
-                                        System.out.println("Inserisci il tempo effettivo: ");
-                                        int tempoEffettivo = Integer.parseInt(scanner.nextLine());
-                                        servizioDAO.saveServizio(new Servizio(mezzoDao.getMezzoById(mezzo), trattaDAO.getTrattaById(tratta), tempoEffettivo));
-                                        System.out.println("Servizio aggiunto con successo!");
-                                    }else if(sceltaServizio == 2){
-                                        System.out.println("Hai scelto di eliminare un servizio!");
-                                        System.out.println("Inserisci l'id del servizio da eliminare: ");
-                                        Long idServizio = Long.parseLong(scanner.nextLine());
-                                        servizioDAO.deleteServizio(servizioDAO.getServizioById(idServizio));
-                                        System.out.println("Servizio eliminato con successo!");
-                                    }
-                                    break;
-                                case 6:
-                                    break;
+                                default:
+                                    System.out.println("Operazione non valida! - devi selezionare una tra le opzioni disponibili");
                             }
 
                             break;
@@ -262,7 +243,9 @@ public class Main {
                                 System.out.println("10 ➡️ Ricerca dei titoli di viaggio per punto di emissione");
                                 System.out.println("11 ➡️ Verifica abbonamento dal numero di tessera");
                                 System.out.println("12 ➡️ Ricerca dei biglietti vidimati in un periodo di tempo");
-                                System.out.println("13 ️➡️ Ricerca numero biglietti vidimati su un particolare mezzo ");
+                                System.out.println("13 ➡️ Ricerca numero biglietti vidimati su un particolare mezzo ");
+                                System.out.println("14 ➡️ Aggiungere/Eliminare Servizi");
+                                System.out.println("15 ➡️ Aggiungere/Eliminare Manutenzione");
 
                                 System.out.println("0 ➡️ Per uscire dal programma");
 
@@ -474,6 +457,50 @@ public class Main {
                                         Long idMezzo3 = Long.parseLong(scanner.nextLine());
                                         System.out.println("I biglietti totali vidimati sul mezzo con id: " + idMezzo3 + " sono: " + titolodiviaggioDao.getBigliettiVidimatiSuUnMezzo(mezzoDao.getMezzoById(idMezzo3)));
                                         break;
+                                    case 14:
+                                        System.out.println("Hai scelto di aggiungere/eliminare un servizio!");
+                                        System.out.println("Per aggiungere un servizio (1) o o per eliminare un servizio (2)");
+                                        int sceltaServizio = Integer.parseInt(scanner.nextLine());
+                                        if(sceltaServizio == 1){
+                                            System.out.println("Hai scelto di aggiungere un servizio!");
+                                            System.out.println("Inserisci l'id del mezzo:  ");
+                                            Long mezzo = Long.parseLong(scanner.nextLine());
+                                            System.out.println("Inserisci l'id della tratta: ");
+                                            Long tratta = Long.parseLong(scanner.nextLine());
+                                            System.out.println("Inserisci il tempo effettivo: ");
+                                            int tempoEffettivo = Integer.parseInt(scanner.nextLine());
+                                            servizioDAO.saveServizio(new Servizio(mezzoDao.getMezzoById(mezzo), trattaDAO.getTrattaById(tratta), tempoEffettivo));
+                                            System.out.println("Servizio aggiunto con successo!");
+                                        }else if(sceltaServizio == 2){
+                                            System.out.println("Hai scelto di eliminare un servizio!");
+                                            System.out.println("Inserisci l'id del servizio da eliminare: ");
+                                            Long idServizio = Long.parseLong(scanner.nextLine());
+                                            servizioDAO.deleteServizio(servizioDAO.getServizioById(idServizio));
+                                            System.out.println("Servizio eliminato con successo!");
+                                        }
+                                        break;
+                                    case 15:
+                                        System.out.println("Hai scelto di aggiungere/eliminare una manutenzione!");
+                                        System.out.println("Per aggiungere una manutenzione(1) o o per eliminare una manutenzione (2)");
+                                        int scelta5 = Integer.parseInt(scanner.nextLine());
+
+                                        if(scelta5 == 1) {
+                                            System.out.println("Crea manutenzione");
+                                            System.out.println("Inserisci l'id del mezzo da mettere in manutenzione");
+                                            long idMezzo4 = Long.parseLong(scanner.nextLine());
+                                            System.out.println("Inserisci la data di inizio manutenzione ( yyyy-mm-dd)");
+                                            LocalDate dataInizioMan = LocalDate.parse(scanner.nextLine());
+                                            System.out.println("Inserisci la data di fine manutenzione ( yyyy-mm-dd)");
+                                            LocalDate dataFineMan = LocalDate.parse(scanner.nextLine());
+                                            manutenzioneDAO.saveManutenzione(new Manutenzione(mezzoDao.getMezzoById(idMezzo4), dataInizioMan, dataFineMan));
+                                            System.out.println("Manutenzione aggiunta con successo!");
+                                        } else if (scelta5 == 2) {
+                                            System.out.println("Inserisci l'id della manutenzione da eliminare");
+                                            long idMan = Long.parseLong(scanner.nextLine());
+                                            manutenzioneDAO.deleteManutenzione(manutenzioneDAO.getManutenzioneById(idMan));
+                                        } else {
+                                            System.out.println("Operazione non valida! - devi selezionare una tra le opzioni disponibili");
+                                        }
 
                                     default:
                                         System.out.println("Operazione non valida! - devi selezionare una tra le opzioni disponibili");
@@ -502,11 +529,6 @@ public class Main {
                     System.out.println("Errore: " + e.getMessage());
                 }
             }
-
-
-
-
-
 
         em.close();
         emf.close();
