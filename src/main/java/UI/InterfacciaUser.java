@@ -47,20 +47,22 @@ public class InterfacciaUser {
                         exit = true;
                         break;
                     case 1:
+                    boolean exitUser = false;
+                    while (!exitUser){
 
-                        System.out.println("Benvenuto sul tuo profilo Utente");
-                        System.out.println("Cosa vuoi fare?");
-                        System.out.println("1 ➡️ Acquistare un biglietto ");
-                        System.out.println("2 ➡️ Acquistare un abbonamento");
-                        System.out.println("3 ➡️ Vidimare il biglietto");
-                        System.out.println("4 ➡️ Rinnovare la tessera scaduta ");
-                        System.out.println("0 ➡️ Per uscire dal programma");
+                        System.out.println("---------------Benvenuto sul tuo profilo Utente---------------");
+                        System.out.println("Cosa vuoi fare ?");
+                        System.out.println(" 1 ➡️ Acquistare un biglietto ");
+                        System.out.println(" 2 ➡️ Acquistare un abbonamento");
+                        System.out.println(" 3 ➡️ Vidimare il biglietto");
+                        System.out.println(" 4 ➡️ Rinnovare la tessera scaduta ");
+                        System.out.println(" 0 ➡️ Per tornare al menu principale");
 
                         int sceltacase1 = Integer.parseInt(scanner.nextLine());
                         switch (sceltacase1) {
                             case 0:
                                 System.out.println("Sei uscito correttamente dal programma! Torna presto!");
-                                exit = true;
+                                exitUser = true;
                                 break;
                             case 1:
                                 System.out.println("Hai scelto di acquistare un biglietto!");
@@ -149,13 +151,13 @@ public class InterfacciaUser {
                                 Long nLinea = scanner.nextLong();
                                 scanner.nextLine();
                                 if (nLinea == 1) {
-                                    System.out.println("Hai scelto la prima linea come servizio");
+                                    System.out.println("Biglietto timbrato sulla prima linea . Grazie");
                                     titolodiviaggioDao.vidimaBiglietto(bigliettoUtente, servizioDAO.getServizioById(nLinea));
                                 } else if (nLinea == 2) {
-                                    System.out.println("Hai scelto la seconda linea come servizio");
+                                    System.out.println("Biglietto timbrato sulla la seconda linea");
                                     titolodiviaggioDao.vidimaBiglietto(bigliettoUtente, servizioDAO.getServizioById(nLinea));
                                 } else if (nLinea == 3) {
-                                    System.out.println("Hai scelto la terza linea come servizio");
+                                    System.out.println("Biglietto timbrato sulla la terza linea . Grazie");
                                     titolodiviaggioDao.vidimaBiglietto(bigliettoUtente, servizioDAO.getServizioById(nLinea));
                                 } else {
                                     System.out.println("Operazione non valida! - devi selezionare una tra le opzioni disponibili");
@@ -171,38 +173,44 @@ public class InterfacciaUser {
                                 System.out.println("Operazione non valida! - devi selezionare una tra le opzioni disponibili");
                         }
 
+
+                    }
+
                         break;
                     case 2:
-                        System.out.println("Inserisci il tuo id Utente per verificare privilegi: ");
+                        boolean exitAdmin = false;
+                        while (!exitAdmin){
+
+                             System.out.println("Inserisci il tuo id Utente per verificare privilegi: ");
                         Long codAmministratore = scanner.nextLong();
                         scanner.nextLine();
                         Utente utenteSuperiore = utenteDao.getUtenteById(codAmministratore);
                         if (utenteSuperiore.getAmministratore()) {
                             System.out.println("Benvenuto sul tuo profilo Amministratore");
-                            System.out.println("⬇️MENU' GENERALE ADMIN⬇️");
-                            System.out.println("1 ➡️ Eliminare Abbonamenti");
-                            System.out.println("2 ➡️ Aggiungere/Eliminare Utenti");
-                            System.out.println("3 ➡️ Aggiungere/Eliminare Tessere");
-                            System.out.println("4 ➡️ Aggiungere/Eliminare Tratte");
-                            System.out.println("5 ➡️ Aggiungere/Eliminare Mezzi");
-                            System.out.println("6 ➡️ Visualizzare i titoli di viaggio emessi in un dato periodo");
-                            System.out.println("7 ➡️ Ricerca il numero di tratte per mezzo ");
-                            System.out.println("8 ➡️ Calcolo della media tempo di percorrenza di una tratta da un mezzo");
-                            System.out.println("9 ➡️ Visualizza il tempo effettivo di percorrenza di una tratta/mezzo");
-                            System.out.println("10 ➡️ Ricerca dei titoli di viaggio per punto di emissione");
-                            System.out.println("11 ➡️ Verifica abbonamento dal numero di tessera");
-                            System.out.println("12 ➡️ Ricerca dei biglietti vidimati in un periodo di tempo");
-                            System.out.println("13 ➡️ Ricerca numero biglietti vidimati su un particolare mezzo ");
-                            System.out.println("14 ➡️ Aggiungere/Eliminare Servizi");
-                            System.out.println("15 ➡️ Aggiungere/Eliminare Manutenzione");
+                            System.out.println("---------------⬇️MENU' GENERALE ADMIN⬇️---------------");
+                            System.out.println(" 1 ➡️ Eliminare Abbonamenti");
+                            System.out.println(" 2 ➡️ Aggiungere/Eliminare Utenti");
+                            System.out.println(" 3 ➡️ Aggiungere/Eliminare Tessere");
+                            System.out.println(" 4 ➡️ Aggiungere/Eliminare Tratte");
+                            System.out.println(" 5 ➡️ Aggiungere/Eliminare Mezzi");
+                            System.out.println(" 6 ➡️ Visualizzare i titoli di viaggio emessi in un dato periodo");
+                            System.out.println(" 7 ➡️ Ricerca il numero di tratte per mezzo ");
+                            System.out.println(" 8 ➡️ Calcolo della media tempo di percorrenza di una tratta da un mezzo");
+                            System.out.println(" 9 ➡️ Visualizza il tempo effettivo di percorrenza di una tratta/mezzo");
+                            System.out.println(" 10 ➡️ Ricerca dei titoli di viaggio per punto di emissione");
+                            System.out.println(" 11 ➡️ Verifica abbonamento dal numero di tessera");
+                            System.out.println(" 12 ➡️ Ricerca dei biglietti vidimati in un periodo di tempo");
+                            System.out.println(" 13 ➡️ Ricerca numero biglietti vidimati su un particolare mezzo ");
+                            System.out.println(" 14 ➡️ Aggiungere/Eliminare Servizi");
+                            System.out.println(" 15 ➡️ Aggiungere/Eliminare Manutenzione");
 
-                            System.out.println("0 ➡️ Per uscire dal programma");
+                            System.out.println(" 0 ➡️ Per tornare al menu principale");
 
                             int sceltacase2 = Integer.parseInt(scanner.nextLine());
                             switch (sceltacase2) {
                                 case 0:
                                     System.out.println("Sei uscito correttamente dal programma! Torna presto!");
-                                    exit = true;
+                                    exitAdmin = true;
                                     break;
                                 case 1:
                                     System.out.println("Hai scelto di eliminare l'abbonamento");
@@ -460,6 +468,7 @@ public class InterfacciaUser {
                             System.out.println("Non hai i permessi per accedere a questa sezione!");
                         }
 
+                        }
 
                         break;
                     default:
@@ -495,7 +504,7 @@ public class InterfacciaUser {
 
         Tessera t = new Tessera(faker.number().digits(8), LocalDate.now());
         Tessera t1 = new Tessera(faker.number().digits(8), LocalDate.now());
-        Tessera t2 = new Tessera(faker.number().digits(8), LocalDate.now());
+        Tessera t2 = new Tessera(faker.number().digits(8), LocalDate.of(2024, 1, 30));
         Tessera t3 = new Tessera(faker.number().digits(8), LocalDate.now());
         tesseraDao.saveTessera(t);
         tesseraDao.saveTessera(t1);

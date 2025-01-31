@@ -24,7 +24,7 @@ public class Main {
 
     public static void main(String[] args) {
         //Metodo per creazione DB
-        intUser.inizializzazioneDB();
+        //intUser.inizializzazioneDB();
         //Interfaccia Utente
         intUser.gestioneUI();
 
